@@ -144,10 +144,36 @@ public class ProgramDatabase
 					{
 						case 1:
 							Collections.reverse(p);
+							boolean sorted = true;
+							Object[]ph = new Object[p.size()];
+							for(int i=ph.length-1; i>0; i--){
+								sorted = true;
+								for(int j=0; j<i-1; j++){
+									if(ph[j] < ph[j+1]){
+										sorted = false;
+										Object temp = ph[j];
+										ph[j] = ph[j+1];
+										ph[j+1] = temp;
+									}
+								}
+							}
 							Method.outputPrograms(p);
 							break;
 						case 2:
 							Collections.sort(p);
+							boolean sorted = true;
+							Object[]ph = new Object[p.size()];
+							for(int i=ph.length-1; i>0; i--){
+								sorted = true;
+								for(int j=0; j<i-1; j++){
+									if(ph[j] > ph[j+1]){
+										sorted = false;
+										Object temp = ph[j];
+										ph[j] = ph[j+1];
+										ph[j+1] = temp;
+									}
+								}
+							}
 							Method.outputPrograms(p);
 							break;
 					}
