@@ -217,7 +217,7 @@ public class GraduateDatabase {
 	* MAX_YEARS_FROM_GRAD years.
 	*/
 	public double findLowestAverage (int programID) {
-		double lowestAverage = Integer.MAX_VALUE;
+		double lowestAverage = -1;
 		for (Graduate graduate : graduateList) {
 			if (graduate.getProgramID() == programID && graduate.getTopSixAverage() < lowestAverage) {
 				lowestAverage = graduate.getTopSixAverage();
@@ -233,7 +233,7 @@ public class GraduateDatabase {
 	* in the specified year.
 	*/
 	public double findLowestAverage (int programID, int year) {
-		double lowestAverage = Integer.MAX_VALUE;
+		double lowestAverage = -1;
 		for (Graduate graduate : graduateList) {
 			if (graduate.getProgramID() == programID && graduate.getYearGraduated() == year && graduate.getTopSixAverage() < lowestAverage) {
 				lowestAverage = graduate.getTopSixAverage();
