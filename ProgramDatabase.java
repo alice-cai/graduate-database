@@ -3,8 +3,8 @@ import java.io.*;
 
 public class ProgramDatabase
 {	
-	private final String PROGRAM = "programs/Program Overview.txt";
-	private final String MENU = "pprograms/rogram database menu.txt";
+	private final String PROGRAM = "programs/program_overview.txt";
+	private final String MENU = "programs/program_database_menu.txt";
 	private final String ORDER = "programs/sort.txt";
    private final String END = "end of course requirement";
    private final double HIGHESTMARK = 100.0;

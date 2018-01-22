@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Program implements Comparable<Program>
 {
-	private final String MENU = "programs/program menu.txt";
+	private final String MENU = "programs/program_menu.txt";
 	private ProgramOverview overview;
 	private ArrayList<CourseRequirement> course;
 	private AdditionalInfo additionalInfo;
