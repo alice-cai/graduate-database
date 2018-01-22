@@ -57,7 +57,7 @@ public class Guest extends User{
 					QNAGuest.displayMenu();
 					break;
 				case 2:
-					//call program list method
+					// I think you need to somehow get an instance of Program Database available for the user object
 					break;
 				case 3:
 					keepOnGoing = false;
