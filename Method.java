@@ -36,7 +36,7 @@ public class Method {
 			return true;
 		}
 	}
-   
+
     public static boolean inputCheck (String s, double number)
 	{
 		try

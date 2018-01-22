@@ -6,12 +6,12 @@ public class ProgramDatabase
 	private final String PROGRAM = "programs/Program Overview.txt";
 	private final String MENU = "pprograms/rogram database menu.txt";
 	private final String ORDER = "programs/sort.txt";
-	private final String END = "end of course requirement";
-	private final double HIGHESTMARK = 100.0;
+   private final String END = "end of course requirement";
+   private final double HIGHESTMARK = 100.0;
 	private ArrayList<Program> programs;
 	private PastData_Manager pastdata;
 	private ArrayList<String> menu;
-	private ArrayList<String> order;
+   private ArrayList<String> order;
    
 	public ProgramDatabase()
 	{
@@ -102,9 +102,11 @@ public class ProgramDatabase
 	{
 		boolean exit = false;
 		int option = menu.size();
+
 		String input;
 		ArrayList<Program> p = new ArrayList<Program>();
 		double mark;
+
 		do
 		{
          Method.displayMenu(menu);
@@ -275,6 +277,7 @@ public class ProgramDatabase
       }
 	}
    
+
 	private void saveData()
 	{
 		try
