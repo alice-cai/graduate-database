@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 
 public class Program implements Comparable<Program>
 {
@@ -25,26 +26,27 @@ public class Program implements Comparable<Program>
    public Program (int programID)
    {
 		course = new ArrayList<CourseRequirement>();
-		pastData = new ArrayList<PastData>();
-		overview = new ProgramOverview();
-		additionalInfo = new AdditionalInfo();
-		contact = new ContactInfo();
-		CourseRequirement c;
-		boolean exit;
-		String input;
-		System.out.print ("Enter any negative integer to exit from entering courses, enter anything else to stay: ");
-		input = Method.sc.nextLine();
-		exit = !Method.inputCheck(input);
-		for (int i = 0;  i <6 && !exit; i++)
-		{
-			c = new CourseRequirement();
-			course.add(c);
-			System.out.print ("Enter any negative integer to exit from entering courses, enter anythign else to stay: ");
-			input =Method.sc.nextLine();
-			exit = !Method.inputCheck(input);
-		}
-		id = programID+1;
-		menu = Method.readMenu(MENU);
+      pastData = new ArrayList<PastData>();
+      overview = new ProgramOverview();
+      additionalInfo = new AdditionalInfo();
+      contact = new ContactInfo();
+      CourseRequirement c;
+      boolean exit;
+      String input;
+      System.out.print ("Enter any negative integer to exit from entering courses, enter anything else to stay: ");
+      input = Method.sc.nextLine();
+      exit = !Method.inputCheck(input);
+      for (int i = 0;  i <6 && !exit; i++)
+      {
+         c = new CourseRequirement();
+         course.add(c);
+         System.out.print ("Enter any negative integer to exit from entering courses, enter anythign else to stay: ");
+         input =Method.sc.nextLine();
+         exit = !Method.inputCheck(input);
+      }
+     	id = programID+1;
+      menu = Method.readMenu(MENU);
+      
    }
 	
    public void setID(int Id)
@@ -59,8 +61,8 @@ public class Program implements Comparable<Program>
 	{
 		boolean exit = false;
 		int option = menu.size();
-		String input;
-		ArrayList<Program> p;
+      String input;
+      ArrayList<Program> p;
 		do
 		{
          Method.displayMenu(menu);
@@ -79,6 +81,9 @@ public class Program implements Comparable<Program>
 					additionalInfo.display();
 					break;
 				case 5:
+					contact.display();
+					break;
+				case 6:
 					exit = true;
 			}
 		}while(!exit);
@@ -109,9 +114,9 @@ public class Program implements Comparable<Program>
 	{
 		int size = course.size();
 		for (int i = 0; i < size; i++)
-      	{
+      {
 			course.get(i).display();
-      	}
+      }
 		String input;
 		System.out.print("Press any key to return to previous menu.");
 		input = Method.sc.nextLine(); 
@@ -155,4 +160,36 @@ public class Program implements Comparable<Program>
 		else
 			return -999;
 	}
+   
+   public void save (String file)
+   {
+      try
+      {
+         BufferedWriter out = new BufferedWriter(new FileWriter(file,true));
+         
+         out.write(id+ "");out.newLine();
+         out.close();
+         overview.save(file);
+         
+         int size = course.size();
+         for (int i = 0; i < size; i ++)
+         {
+            course.get(i).save(file);
+         }
+         out = new BufferedWriter(new FileWriter(file,true));
+
+         out.write("End of course requirement"); out.newLine();
+         out.close();
+         
+         additionalInfo.save(file);
+         
+         contact.save(file);
+         
+         out.close();
+      }
+      catch(IOException iox)
+      {
+         System.out.println("Problem saving program.");
+      }
+   }
 }
