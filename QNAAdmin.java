@@ -564,6 +564,7 @@ public class QNAAdmin extends QNAPage
                      }
                   }
 				   }
+				   sc.nextLine();
             }
             else                                                     // if there are no available questions to delete
             {
@@ -615,6 +616,7 @@ public class QNAAdmin extends QNAPage
                {
                   deleteQ(id);                                       // call the deleteQ method to delete chosen question
                }
+			   sc.nextLine();
             }
             else                                                     // if no available unanswered questions found
             {
