@@ -1,0 +1,7 @@
+1. View all Q&As
+2. Search by keyword
+3. View all categories
+4. Search by category
+5. Browse unanswered questions
+6. Browse unanswered questions by category
+7. Add a catgory

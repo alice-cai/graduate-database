@@ -1,0 +1,8 @@
+6
+
+1. View Courses
+2. Add Course
+3. Delete Course
+4. Update Course
+5. Move to Graduate Database
+6. Remove Student Account

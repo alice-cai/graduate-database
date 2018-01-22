@@ -1,0 +1,7 @@
+5
+
+1. Log In (Student)
+2. Log In (Admin)
+3. Log In (Guest)
+4. Register (Student)
+5. End Program
