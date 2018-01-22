@@ -3,36 +3,25 @@ import java.io.*;
 
 public class ProgramDatabase
 {	
-	private final String PROGRAM = "programs/program_overview.txt";
-	private final String MENU = "programs/program_database_menu.txt";
+	private final String PROGRAM = "programs/Program Overview.txt";
+	private final String MENU = "pprograms/rogram database menu.txt";
 	private final String ORDER = "programs/sort.txt";
-	private final String END = "end of course requirement";
-	private final double HIGHESTMARK = 100.0;
+   private final String END = "end of course requirement";
+   private final double HIGHESTMARK = 100.0;
 	private ArrayList<Program> programs;
 	private PastData_Manager pastdata;
 	private ArrayList<String> menu;
-	private ArrayList<String> order;
+   private ArrayList<String> order;
    
 	public ProgramDatabase()
 	{
 		menu = Method.readMenu(MENU);
 		order = Method.readMenu(ORDER);
-      pastdata = new PastData_Manager();
       programs = new ArrayList<Program>();
-      
+      pastdata = new PastData_Manager();
+
       int totalProgram = getProgramNumber();
       int graduateSize;
-      
-      for(int i = 1; i<= totalProgram; i++)
-      {
-         for (int j = Method.CURYEAR-Method.PASTDATA; j<Method.CURYEAR; j++)
-         {
-            if (!((graduateSize=pastdata.getGrad().findGradList(i,j).size())<=0))
-            {
-               pastdata.addPastData(new PastData(j, i, pastdata.getGrad().findLowestAverage(i,j),pastdata.getGrad().calculateMean(i,j), pastdata.getGrad().calculateMedian(i,j), pastdata.getGrad().findGradList(i,j).size()));
-            }
-         }
-      }
       
       String [] placeHolder = new String [4];
       int enrollment;
@@ -52,9 +41,20 @@ public class ProgramDatabase
          BufferedReader in = new BufferedReader(new FileReader(PROGRAM));
          while ((input = in.readLine())!=null)
          {
+            
             ID = Integer.parseInt(input);
+            
+            for (int j = Method.CURYEAR-Method.PASTDATA+1; j<=Method.CURYEAR; j++)
+            {
+               if (!((graduateSize=(pastdata.getGrad().findGradList(ID,j).size()))<=0))
+               {
+                  pastdata.addPastData(new PastData(j, ID, pastdata.getGrad().findLowestAverage(ID,j),pastdata.getGrad().calculateMean(ID,j), pastdata.getGrad().calculateMedian(ID,j), pastdata.getGrad().findGradList(ID,j).size()));
+               }
+            }
+            
             for (int i= 0; i < 4; i++)
                placeHolder[i] = in.readLine();
+               
             coop = Method.trueOrFalse(in.readLine());
             enrollment = Integer.parseInt(in.readLine());
             mark = pastdata.admissionAverage(ID);
@@ -74,7 +74,11 @@ public class ProgramDatabase
                placeHolder[i] = in.readLine();
             contact = new ContactInfo(placeHolder[0],placeHolder[1],placeHolder[2], placeHolder[3]);
             
+
+
             programs.add(new Program(overview, courses, additionalInfo, contact, ID, pastdata.findPastData(ID)));
+            courses=new ArrayList<CourseRequirement>();
+            pastdata = new PastData_Manager();
          }
 			in.close();
       }
@@ -85,18 +89,21 @@ public class ProgramDatabase
       
 	}
 	
+   public ArrayList<Program> getProgram()
+   {
+      return programs;
+   } // for debugging
    
    public int getProgramNumber()
    {
       return programs.size();
    }
-	//////////////////
 	public void displayMenu()
 	{
 		boolean exit = false;
 		int option = menu.size();
       String input;
-      ArrayList<Program> p;
+      ArrayList<Program> p = new ArrayList<Program>();
       double mark;
 		do
 		{
@@ -216,12 +223,12 @@ public class ProgramDatabase
 	{
 		Program p = new Program(programs.size());
 		programs.add(p);
-		
+		saveData();
 		//intitate all variables with user input.
 		
 	}
 	
-   public void addPastData()
+   /*public void addPastData()
 	{	
 		int year;
 		String input;
@@ -236,19 +243,50 @@ public class ProgramDatabase
 		System.out.print("Search program: ");
       
 		// input info about the program here
-	}
+	}*/
    
 	public void deleteProgram()
 	{
-		  
+		  Method.displayProgramList(programs);
+        System.out.print("Enter the program number to be deleted: ");
+        deleteProgram(Method.getOption(programs.size()+1)-2);
+        saveData();
 	}// delete from a list
 	
 	public void deleteProgram(int index)
 	{
-		
+      int size = programs.size();
+      String input;
+      
+      if (index >=0 && index < size)
+      {
+   		programs.remove(index);
+         for (int i = index; i < size-1; i++)
+         {
+            programs.get(i).setID(programs.get(i).getId()-1);
+         }
+         System.out.println("Program deleted.");
+   		System.out.print("Press any key to return to previous menu.");
+   		input = Method.sc.nextLine(); 
+      }
+      else if (index!=-1)
+      {
+         System.out.println("Deletion unsuccessful.");
+   		System.out.print("Press any key to return to previous menu.");
+   		input = Method.sc.nextLine(); 
+      }
 	}
+   
    private void saveData()
    {
-		
+		try
+      {
+         BufferedWriter out = new BufferedWriter(new FileWriter("hehe.txt"));
+
+      }
+      catch(IOException iox)
+      {
+         System.out.println("Problem accessing the file, no progress is saved.");
+      }
    }
 }

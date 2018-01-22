@@ -26,13 +26,13 @@ public class AdditionalInfo
 	public void display()
 	{
 		String input;
-		System.out.print(this);
+		System.out.println(this);
 		System.out.print("Press any key to return to previous menu.");
 		input = Method.sc.nextLine(); 
 	}
 	
 	public String toString ()
 	{
-		return("Scholarship options: " + scholarship + "\nSupplementary requirement: " + supplementary + "\nEarly admission date: "+ earlyAdm + "\n\n");
+		return("Scholarship options: " + scholarship + "\nSupplementary requirement: " + supplementary + "\nEarly admission date: "+ earlyAdm +"\n");
 	}
 }
