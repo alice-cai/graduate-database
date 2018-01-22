@@ -2,4 +2,5 @@ View program overview
 View course requirement
 View past data
 View additional information
+View contact information
 Return to previous list

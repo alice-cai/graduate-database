@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 
 public class ProgramOverview
 {
@@ -9,7 +10,7 @@ public class ProgramOverview
 	private boolean coop;
 	private int enrollment;
 	private double admissionAverage;
-	Scanner sc = new Scanner (System.in);
+   Scanner sc = new Scanner (System.in);
 	
 	public ProgramOverview(String n, String u, String o, String m, boolean c, int e, double a)
 	{
@@ -34,7 +35,7 @@ public class ProgramOverview
       		major=sc.nextLine();
       		System.out.print ("Enter enrollment number: ");
       		enrollment=sc.nextInt();
-      		System.out.print ("Enter coop option (enter \"ture\" for true, and anything else for false): ");
+      		System.out.print ("Enter coop option (enter \"true\" for true, and anything else for false): ");
             sc.next();
       		coop=Boolean.parseBoolean(sc.nextLine().toLowerCase());
             System.out.print ("Enter anticipated admission average: ");
@@ -69,15 +70,20 @@ public class ProgramOverview
 		return ouacCode; 
 	}
 	
-	public double getAverage()
-	{
-		return admissionAverage;
-	}
+   public double getAverage()
+   {
+      return admissionAverage;
+   }
+   
+   public boolean getCoop()
+   {
+      return coop;
+   }
    
 	public String overview()
-	{
-		return ("Program name: " + name + "\nUniversity: " + university + "\nOUAC code : "+ ouacCode + "\nMajor: " + major + "\nAdmisision average: " + admissionAverage+"\n");
-	}
+   {
+      return ("Program name: " + name + "\nUniversity: " + university + "\nOUAC code : "+ ouacCode + "\nMajor: " + major + "\nAdmisision average: " + admissionAverage+"\n");
+   }
 	
 	public String toString ()
 	{
@@ -87,5 +93,24 @@ public class ProgramOverview
 		s+= "Admission average: " + (admissionAverage>0? admissionAverage : "unknown") + "\n";
 		return s;
 	}
+   
+   public void save (String file)
+   {
+      try
+      {
+         BufferedWriter out = new BufferedWriter(new FileWriter(file,true));
+         out.write(name);out.newLine();
+         out.write(university);out.newLine();
+         out.write(ouacCode);out.newLine();
+         out.write(major);out.newLine();
+         out.write(coop?"Yes":"No");out.newLine();
+         out.write(enrollment + "");out.newLine();
+         out.close();
+      }
+      catch(IOException iox)
+      {
+         System.out.println("Problem saving program overview.");
+      }
+   }
 	
 }

@@ -5,9 +5,9 @@ public class Method {
 	public static final int CURYEAR = 2018;
 	public static final int PASTDATA = 5;
 	public static Scanner sc = new Scanner(System.in);
-	public static final String ERROR = "\nList not found, press 1 to return to previous menu...";
+   public static final String ERROR = "List not found, press 1 to return to previous menu...";
     
-	public static boolean inputCheck (String s, int option)
+   public static boolean inputCheck (String s, int option)
 	{
 		try
 		{
@@ -22,7 +22,7 @@ public class Method {
 		}
 	}
    
-    public static boolean inputCheck (String s)
+   public static boolean inputCheck (String s)
 	{
 		try
 		{
@@ -36,8 +36,8 @@ public class Method {
 			return true;
 		}
 	}
-
-    public static boolean inputCheck (String s, double number)
+   
+   public static boolean inputCheck (String s, double number)
 	{
 		try
 		{
@@ -52,35 +52,35 @@ public class Method {
 		}
 	}
    
-	public static ArrayList <String> readMenu(String file)
-	{
-		ArrayList<String> menu = new ArrayList<String> ();
-		try 
-		{
-			BufferedReader in = new BufferedReader(new FileReader(file));
+	 public static ArrayList <String> readMenu(String file)
+	 {
+	 	ArrayList<String> menu = new ArrayList<String> ();
+	 	try 
+      {
+         BufferedReader in = new BufferedReader(new FileReader(file));
 			String line;
 			while ((line = in.readLine())!= null)
 			{
 				menu.add(line);
 			}
 			in.close();
-		}
-		catch (IOException iox)
-		{
+      }
+      catch (IOException iox)
+      {
 			System.out.print("Cannot load files.");
-		}
+      }
 		return menu;
 	 }
 	 
 	 public static int getOption (int option)
 	 {
 	 		String choice;
-	 		System.out.print("Enter your choice: ");
+	 		System.out.print("Enter your choice:");
 			choice = sc.nextLine();
 			while (!inputCheck(choice, option))
 			{
 				System.out.println("The previous entry is invalid.");
-				System.out.print("Enter your choice: ");
+				System.out.print("Enter your choice:");
 				choice = sc.nextLine();
 			}
 			return Integer.parseInt(choice);
@@ -94,7 +94,7 @@ public class Method {
 			while (!inputCheck(choice, number))
 			{
 				System.out.println("The previous entry is invalid.");
-				System.out.print("Enter your choice: ");
+				System.out.print("Enter your choice:");
 				choice = sc.nextLine();
 			}
 			return Double.parseDouble(choice);
@@ -102,8 +102,8 @@ public class Method {
     
     public static void displayProgramList(ArrayList<Program> p)
     {
-        int i = 1;
-        System.out.println(i++ +". return to previous list");
+         int i = 1;
+         System.out.println(i++ +". return to previous list");
    		for ( ; i <= p.size()+1; i++)
          	System.out.println(i+ ". " + p.get(i-2));
     }
@@ -126,27 +126,26 @@ public class Method {
     }
     
     public static void outputPrograms(ArrayList<Program> p)
-	{
-		if(p.isEmpty())
-		{
-			System.out.println(ERROR);
-			Method.getOption(1);
-		}
-		else
-		{
-			System.out.println("\n--- Programs ---");
-			Method.displayProgramList(p);
-			int input = Method.getOption(p.size()+1);
-			if (input > 1)
-				p.get(input-2).displayMenu();
-		}
+	 {
+      if(p.isEmpty())
+      {
+         System.out.print(ERROR);
+         Method.getOption(1);
+      }
+      else
+      {
+         Method.displayProgramList(p);
+         int input = Method.getOption(p.size()+1);
+         if (input > 1)
+            p.get(input-2).displayMenu();
+      }
 	}
    
-	public static boolean trueOrFalse(String s)
-	{
-		if (s.toLowerCase().equals("yes"))
-			return true;
-		else
-			return false;
-	}
+   public static boolean trueOrFalse(String s)
+   {
+      if (s.toLowerCase().equals("yes"))
+         return true;
+      else
+         return false;
+   }
 }

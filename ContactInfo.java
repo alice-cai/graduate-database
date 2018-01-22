@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 
 public class ContactInfo
 {
@@ -8,7 +9,7 @@ public class ContactInfo
 	private String person;
    Scanner sc = new Scanner (System.in);
    
-	public ContactInfo(String ph, String e, String a, String p)
+	public ContactInfo(String ph, String e, String p, String a)
 	{
 		phone=ph;
 		email = e;
@@ -26,6 +27,27 @@ public class ContactInfo
       System.out.print ("Enter contact person: ");
       person=sc.nextLine();
    }
+   
+   public String getPhone()
+   {
+      return phone;
+   }
+   
+   public String getEmail()
+   {
+      return email;
+   }
+   
+   public String getPerson()
+   {
+      return person;
+   }
+   
+   public String getAddress()
+   {
+      return address;
+   }
+   
 	public void display()
 	{
 		Scanner sc  = new Scanner (System.in);
@@ -39,6 +61,22 @@ public class ContactInfo
 	{
 		return("Phone: " + phone + "\nEmail: " + email + "\naddress: "+ address + "\nperson: " + person + "\n");
 	}
-	//ArrayList <Integer> hehe = new ArrayList <>();
+   
+	public void save (String file)
+   {
+      try
+      {
+         BufferedWriter out = new BufferedWriter(new FileWriter(file,true));
+         out.write(phone);out.newLine();
+         out.write(email);out.newLine();
+         out.write(person);out.newLine();
+         out.write(address);out.newLine();
+         out.close();
+      }
+      catch(IOException iox)
+      {
+         System.out.println("Problem saving contact information.");
+      }
+   }
 	
 }

@@ -17,24 +17,24 @@ public class ProgramDatabase
 	{
 		menu = Method.readMenu(MENU);
 		order = Method.readMenu(ORDER);
-		programs = new ArrayList<Program>();
-		pastdata = new PastData_Manager();
+      programs = new ArrayList<Program>();
+      pastdata = new PastData_Manager();
 
-		int totalProgram = getProgramNumber();
-		int graduateSize;
-
-		String [] placeHolder = new String [4];
-		int enrollment;
-		int courseMark;
-		double mark;
-		boolean coop;
-
-		String input;
-		ProgramOverview overview;
-		ArrayList<CourseRequirement> courses = new ArrayList<CourseRequirement>();
-		AdditionalInfo additionalInfo;
-		ContactInfo contact;
-		int ID;
+      int totalProgram = getProgramNumber();
+      int graduateSize;
+      
+      String [] placeHolder = new String [4];
+      int enrollment;
+      int courseMark;
+      double mark;
+      boolean coop;
+      
+      String input;
+      ProgramOverview overview;
+      ArrayList<CourseRequirement> courses = new ArrayList<CourseRequirement>();
+      AdditionalInfo additionalInfo;
+      ContactInfo contact;
+      int ID;
       
       try
       {
@@ -84,20 +84,20 @@ public class ProgramDatabase
       }
       catch (IOException iox)
       {
-         System.out.println("Cannot load ProgramDatabase file...");
+         System.out.println("Cannot load file...");
       }
+      
 	}
 	
-	public static ArrayList<Program> getProgram()
-	{
-		return programs;
-	}
-
-	public static int getProgramNumber()
-	{
-		return programs.size();
-	}
-
+   public static ArrayList<Program> getProgram()
+   {
+      return programs;
+   } // for debugging
+   
+   public static int getProgramNumber()
+   {
+      return programs.size();
+   }
 	public static void displayMenu()
 	{
 		boolean exit = false;
@@ -106,10 +106,10 @@ public class ProgramDatabase
 		String input;
 		ArrayList<Program> programList = new ArrayList<Program>();
 		double mark;
+
 		do
 		{
-			System.out.println("\n--- Program Database ---");
-         	Method.displayMenu(menu);
+         Method.displayMenu(menu);
 			switch(Method.getOption(option))
 			{
 				case 1:
@@ -150,11 +150,11 @@ public class ProgramDatabase
 							//Collections.sort(programList);
 							Method.outputPrograms(sort(programList));
 							break;
-					}
-               		break;
-            	case 6:
+               }
+               break;
+            case 6:
 					exit = true;
-               	break;
+               break;
 			}
 		} while(!exit);
 	}
@@ -219,6 +219,7 @@ public class ProgramDatabase
 
 		return temp;
 	}
+	
 	
 	public static ArrayList<Program> searchByUni(String s)
 	{
@@ -288,66 +289,53 @@ public class ProgramDatabase
 		//intitate all variables with user input.
 		
 	}
-	
-   /*public void addPastData()
-	{	
-		int year;
-		String input;
-	
-		PastData programList;
-		System.out.print("Enter the year: ");
-		do{
-			input = Method.sc.nextLine();
-		}
-		while(!Method.inputCheck (input, Method.CURYEAR));
-		year = Integer.parseInt(input);
-		System.out.print("Search program: ");
-      
-		// input info about the program here
-	}*/
    
 	public static void deleteProgram()
 	{
-		Method.displayProgramList(programs);
-		System.out.print("Enter the program number to be deleted: ");
-		deleteProgram(Method.getOption(programs.size()+1)-2);
-		saveData();
+		  Method.displayProgramList(programs);
+        System.out.print("Enter the program number to be deleted: ");
+        deleteProgram(Method.getOption(programs.size()+1)-2);
+        saveData();
 	}// delete from a list
 	
 	public static void deleteProgram(int index)
 	{
-		int size = programs.size();
-		String input;
-
-		if (index >=0 && index < size)
-		{
-			programs.remove(index);
-			for (int i = index; i < size-1; i++)
-			{
-				programs.get(i).setID(programs.get(i).getId()-1);
-			}
-			System.out.println("Program deleted.");
-			System.out.print("Press any key to return to previous menu.");
-			input = Method.sc.nextLine(); 
-		}
-		else if (index!=-1)
-		{
-			System.out.println("Deletion unsuccessful.");
-			System.out.print("Press any key to return to previous menu.");
-			input = Method.sc.nextLine(); 
-		}
+      int size = programs.size();
+      String input;
+      
+      if (index >=0 && index < size)
+      {
+   		programs.remove(index);
+         for (int i = index; i < size-1; i++)
+         {
+            programs.get(i).setID(programs.get(i).getId()-1);
+         }
+         System.out.println("Program deleted.");
+   		System.out.print("Press any key to return to previous menu.");
+   		input = Method.sc.nextLine(); 
+      }
+      else if (index!=-1)
+      {
+         System.out.println("Deletion unsuccessful.");
+   		System.out.print("Press any key to return to previous menu.");
+   		input = Method.sc.nextLine(); 
+      }
 	}
    
+   private static void saveData()
+   {
+       try{
+         BufferedWriter out = new BufferedWriter(new FileWriter(PROGRAM));
+         for (int i = 0; i < programs.size(); i ++)
+         {
+            programs.get(i).save(PROGRAM);
+         }
+         out.close();
+     }
+     catch(IOException iox)
+     {
+			
+     }
 
-	private static void saveData()
-	{
-		try
-		{
-			BufferedWriter out = new BufferedWriter(new FileWriter("hehe.txt"));
-		}
-		catch(IOException iox)
-		{
-			System.out.println("Problem accessing the file, no progress is saved.");
-		}
-	}
+   }
 }
