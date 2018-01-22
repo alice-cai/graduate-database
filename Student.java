@@ -1,7 +1,6 @@
 import java.util.*;
 import java.io.*;
 
-//Guest user class. Extends User
 public class Student extends User {
 	private Scanner sc = new Scanner(System.in);
 
@@ -16,8 +15,6 @@ public class Student extends User {
 	private int numMenuOptions;
 	private String[] menuOptions;
 
-	//admin constructor. takes in username, password, and admin number as strings
-	//respectively
 	public Student(String username, String password, String firstName, String lastName, String oen, CourseTracker courseTracker, boolean accepted){
 		super(username, password);
 		this.firstName = firstName;
@@ -28,7 +25,6 @@ public class Student extends User {
 		loadMenu();
 	}
 
-	//accessors
 	public String getFirstName(){
 		return firstName;
 	}
@@ -151,7 +147,7 @@ public class Student extends User {
 					QNAStudent.displayMenu();
 				 	break;
 				case 2:
-               UserDatabase.programDatabase.displayMenu();
+					ProgramDatabase.displayMenu();
 					break;
 				case 3:
 					viewCourses();

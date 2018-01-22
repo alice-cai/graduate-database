@@ -87,5 +87,8 @@ public class QNAGuest extends QNAPage
 					break;
 			}
 		} while (option != EXIT);              // repeat until user enters exit number
+      answeredQNAs.clear();                  // clear all array lists before next user loads information again
+      categories.clear();
+      menu.clear();
 	}  // displayMenu method
 } // QNAGuest class

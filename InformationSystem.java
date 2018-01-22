@@ -5,7 +5,6 @@ public class InformationSystem {
 	private static String MENU_FILE = "user_menus/Main_Menu.txt";
 	private static String EXIT = "-1";
 	private UserDatabase users;
-	private ProgramDatabase programs;
 	private GraduateDatabase graduateDatabase;
 	private User currentUser;
 	private String[] menuOptions;
@@ -16,7 +15,7 @@ public class InformationSystem {
 	public InformationSystem () {
 		graduateDatabase = new GraduateDatabase();
 		users = new UserDatabase(graduateDatabase);
-		programs = new ProgramDatabase();
+		ProgramDatabase.initialize();
 		sc = new Scanner(System.in);
 		endProgram = false;
 		loadMenu();

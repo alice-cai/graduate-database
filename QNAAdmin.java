@@ -1,11 +1,11 @@
-// Class: 	QNAAdmin
-// Author: 	Ordencia Wu
-// Date: 	January 15, 2018
-// School: 	A.Y Jackson Secondary School
+// Class:   QNAAdmin
+// Author:  Ordencia Wu
+// Date:    January 15, 2018
+// School:  A.Y Jackson Secondary School
 // Purpose: This class contains fields and methods that every admin should have access to 
 //          that will make up an interactive Q&A menu for them. This class also inherits 
-//			   fields and methods from the QNAPage class, which contains everything that is
-//			   used by the general user
+//          fields and methods from the QNAPage class, which contains everything that is
+//          used by the general user
 
 import java.util.*;
 import java.io.*;
@@ -22,21 +22,21 @@ public class QNAAdmin extends QNAPage
    {
       QNAAdmin.initPage();                                                    // first initialize fields and array lists that are shared among all users
       try                                                                     // then move on to admin-specific elements
-	   {
-		   BufferedReader in = new BufferedReader (new FileReader (UNANSWERED));// read the file containing unanswered questions   
-		   QNA temp;                                                            // declare a temporary QNA object 
-			String newLine;                                                      // String variable to detect end of file, and store id of each new question
-		   int id;                                                              // temporary id of each new question
-		   String question, answer, category;                                   // temporary question, answer, and category of each new question
-		   while ((newLine=in.readLine())!= null)                               // while the new line has not reached the end of file
-		   {
-			   id = Integer.parseInt(newLine);                                   // assign values to temporary id, question
-			   question = in.readLine();
-			   answer = EMPTY;                                                   // there's no answer for unanswered questions, so answer is empty
-			   category = in.readLine();
-			   temp = new QNA (id, question, answer, category);                  // create the temporary QNA object
+      {
+         BufferedReader in = new BufferedReader (new FileReader (UNANSWERED));// read the file containing unanswered questions   
+         QNA temp;                                                            // declare a temporary QNA object 
+         String newLine;                                                      // String variable to detect end of file, and store id of each new question
+         int id;                                                              // temporary id of each new question
+         String question, answer, category;                                   // temporary question, answer, and category of each new question
+         while ((newLine=in.readLine())!= null)                               // while the new line has not reached the end of file
+         {
+            id = Integer.parseInt(newLine);                                   // assign values to temporary id, question
+            question = in.readLine();
+            answer = EMPTY;                                                   // there's no answer for unanswered questions, so answer is empty
+            category = in.readLine();
+            temp = new QNA (id, question, answer, category);                  // create the temporary QNA object
             unansweredQNAs.add(temp);                                         // and add it to the array list of unanswered questions
-		   }
+         }
          numUQs = unansweredQNAs.size();                                      // initialize the number of unanswered questions
          
          in = new BufferedReader (new FileReader (MENU));                     // switch to read the menu file for admin
@@ -48,11 +48,11 @@ public class QNAAdmin extends QNAPage
          numMenuOptions = menu.size();                                        // then initialize number of menu options
          
          in.close();
-	   }
-	   catch (IOException iox)                                                 // catch exception if needed
-	   {
-	   	System.out.println ("Problem accessing file.");
-	   }
+      }
+      catch (IOException iox)                                                 // catch exception if needed
+      {
+         System.out.println ("Problem accessing file.");
+      }
 
    } // initQNA method
    
@@ -68,45 +68,45 @@ public class QNAAdmin extends QNAPage
          }
          System.out.println ("Enter option number (\"" + EXIT + "\" to return to previous menu): ");
    
-			boolean valid = false;                                            // before user enters option number, set boolean variable valid to false   
-			while (!valid)                                                    // this represents whether user's input is valid
-			{
-				try
-				{
-					option = sc.nextInt();                                         // if user enters an int that is either the exit number or a number within the 
-					if (option == EXIT || option>= 1 && option <= numMenuOptions)  // reasonable range (1 to number of menu options)
-					{
-						valid = true;                                               // then set valid to true
-					}
-					else                                                           // otherwise user have to enter an option again
-					{
-						System.out.print ("Invalid input, enter again: ");
-					}
-				}	
-				catch (InputMismatchException ime)                                // catch any input mismatch if user enters a String
-				{	
-					System.out.print ("Invalid input, enter again: ");             // and ask user to enter again
+         boolean valid = false;                                            // before user enters option number, set boolean variable valid to false   
+         while (!valid)                                                    // this represents whether user's input is valid
+         {
+            try
+            {
+               option = sc.nextInt();                                         // if user enters an int that is either the exit number or a number within the 
+               if (option == EXIT || option>= 1 && option <= numMenuOptions)  // reasonable range (1 to number of menu options)
+               {
+                  valid = true;                                               // then set valid to true
+               }
+               else                                                           // otherwise user have to enter an option again
+               {
+                  System.out.print ("Invalid input, enter again: ");
+               }
+            }  
+            catch (InputMismatchException ime)                                // catch any input mismatch if user enters a String
+            {  
+               System.out.print ("Invalid input, enter again: ");             // and ask user to enter again
                sc.nextLine();
-				}
-			} 
-			
+            }
+         } 
+         
          switch (option)                     // once option number is valid, enter the switch structure                     
          {
             case 1:                          // if option = 1
               displayList();                 // display list of Q&As
-				  break;
-				case 2:                          // if option = 2
-					searchKeyWord();              // search questions by keyword
-					break;
-				case 3:                          // if option = 3
-					categoryList();               // display list of categories
-					break;
-				case 4:                          // if option = 4
-					searchCategory();             // search questions by category
-					break;
-				case 5:                          // if option = 5
-					browseUnanswered();           // browse all unanswered questions, and maybe answer or delete some of them
-					break; 
+              break;
+            case 2:                          // if option = 2
+               searchKeyWord();              // search questions by keyword
+               break;
+            case 3:                          // if option = 3
+               categoryList();               // display list of categories
+               break;
+            case 4:                          // if option = 4
+               searchCategory();             // search questions by category
+               break;
+            case 5:                          // if option = 5
+               browseUnanswered();           // browse all unanswered questions, and maybe answer or delete some of them
+               break; 
             case 6:                          // if option = 6
                browseCategory();             // browse unanswered questions by category, and maybe answer or delete some of them
                break;
@@ -115,43 +115,47 @@ public class QNAAdmin extends QNAPage
                break;
          }
       } while (option != EXIT);              // menu will be displayed over and over until user decides to exit 
+      answeredQNAs.clear();                  // clear all array lists before next user loads information again
+      categories.clear();
+      menu.clear();
+      unansweredQNAs.clear();
    } // displayMenu method
    
    public static void browseCategory ()                                          // method to browse unanswered questions by category
    {
       int category = INITIAL;                                                    // initialize int representing desired category (will be given useful value in a try structure)
       ArrayList<Integer> possibleIds = new ArrayList<Integer>();                 // array list containing ids for a chosen category, will be useful when checking valid input for ids later
-   	do
-   	{
+      do
+      {
          for (int i = 0; i < numCategory; i ++)
          {
             System.out.print (i+1+". ");
             System.out.println (categories.get(i));                              // first output all categories with a category number
          }
-   		System.out.println ("Enter the number of a category (\"" + EXIT + "\" to return to previous menu): ");
+         System.out.println ("Enter the number of a category (\"" + EXIT + "\" to return to previous menu): ");
   
-			boolean valid = false;                                                  // before user enters category number, initialize valid to false
-			while (!valid)
-			{
-				try   
-				{                          
-					category = sc.nextInt();                                          // if user enters an int that is either exit or within the reasonable range   
-					if (category == EXIT || category >= 1 && category <= numCategory) // (from 1 to number of categories)
-					{
-						valid = true;                                                  // user input is valid
-					}
-					else                                                              // otherwise user will be asked to input again until something valid is entered
-					{
-						System.out.print ("Invalid input, enter again: ");
-					}
-				}	
-				catch (InputMismatchException ime)                                   // catch input mismatch exceptions
-				{	
-					System.out.print ("Invalid input, enter again: ");
+         boolean valid = false;                                                  // before user enters category number, initialize valid to false
+         while (!valid)
+         {
+            try   
+            {                          
+               category = sc.nextInt();                                          // if user enters an int that is either exit or within the reasonable range   
+               if (category == EXIT || category >= 1 && category <= numCategory) // (from 1 to number of categories)
+               {
+                  valid = true;                                                  // user input is valid
+               }
+               else                                                              // otherwise user will be asked to input again until something valid is entered
+               {
+                  System.out.print ("Invalid input, enter again: ");
+               }
+            }  
+            catch (InputMismatchException ime)                                   // catch input mismatch exceptions
+            {  
+               System.out.print ("Invalid input, enter again: ");
                sc.nextLine();
-				}
-			}
-			
+            }
+         }
+         
          System.out.println ();
          possibleIds.clear();                                                    // clear content in the possibleIds array to store new ids for a newly chosen category
          
@@ -177,25 +181,25 @@ public class QNAAdmin extends QNAPage
                answerPrompt(possibleIds);                                        // call the answerPrompt method, pass in the array list of possible ids
                deletePrompt(possibleIds);                                        // call the deletePrompt method, pass int eh array list of possible ids
                savingPrompt(); 
-					System.out.println();                                              // call the savingsPrompt method
+               System.out.println();                                              // call the savingsPrompt method
             }
             else                                                                 // if nothing in the category is found, output a message
-				{
+            {
                System.out.println ("Currently no unanswered Q&As available from this category.");
-					System.out.println ();
-				}
+               System.out.println ();
+            }
          }
          
-    	} while (category != EXIT);                                                // this process if looped until admin no longer wants to browse questions by category
+      } while (category != EXIT);                                                // this process if looped until admin no longer wants to browse questions by category
    } // browseCategory method
    
    public static void browseUnanswered()        // this method allows admin to browse all unanswered questions
    {
-		boolean exit;                             // declare a boolean variable representing whether admin wishes to exit this page
+      boolean exit;                             // declare a boolean variable representing whether admin wishes to exit this page
       do
       {
          System.out.println("\n--- Browse Unanswered Questions By Category ---");
-			exit = false;                          // set exit to false, assuming admin doesn't want to exit yet
+         exit = false;                          // set exit to false, assuming admin doesn't want to exit yet
          
          answerPrompt();                        // call the answerPrompt method, note that this method is overloaded and if called without parametres,
                                                 // program will invoke the method that's more useful when browsing ALL unasnwered questions instead of by categories
@@ -266,11 +270,11 @@ public class QNAAdmin extends QNAPage
       {
          System.out.println ("Problem writing to file.");
       }
-		System.out.println ();
+      System.out.println ();
    } // save method
    
    public static void answerPrompt (ArrayList<Integer> possibleIds)  // this method prompts admin to answer question when browing 
-   {																 						// parametre: an array list of ids of possible questions to be selected
+   {                                                                 // parametre: an array list of ids of possible questions to be selected
       int id = INITIAL;                                              // initialize id representing user's choice of question to answer
       do
       {
@@ -281,7 +285,7 @@ public class QNAAdmin extends QNAPage
          {
             int possibleId = possibleIds.get(i);                     // go through each possible id, and assign temporary variable "possibleId" one value at a time
             boolean found = false;                                   // initialize found to false, meaning the id hasn't been found from the array list of unanswered questions
-		      int beginning = 0, ending = unansweredQNAs.size()-1;     // use binary search: beginning index of array list: 0, ending: array list size-1                               
+            int beginning = 0, ending = unansweredQNAs.size()-1;     // use binary search: beginning index of array list: 0, ending: array list size-1                               
             int middle = INITIAL;                                    // index of middle value initialized
                                                       
             while (!found && beginning <= ending)           // while not found and not completely searched (beginning <= ending)
@@ -305,51 +309,51 @@ public class QNAAdmin extends QNAPage
          {
             System.out.println ();
             System.out.println ("Enter ID to answer a question (\"" + EXIT + "\" to stop): ");
-			                                                   // then admin has a chance to enter the id of the question they want to answer
-			   boolean valid = false;                          // boolean variable valid is set to false
-			   while (!valid)
-			   {
+                                                            // then admin has a chance to enter the id of the question they want to answer
+            boolean valid = false;                          // boolean variable valid is set to false
+            while (!valid)
+            {
                boolean found = false;                       // set boolean variable found to false, this variable is used to check if the id
                                                             // chosen by admin belongs to the list of possible ids
-			   	try
-			   	{
-			   		id = sc.nextInt();         
-			   		
-			   		if (id != EXIT)                           // if user doesn't enter the exit number for id then we start looking through 
-            		{                                         // the list of possible ids and determine whether user entered a valid id
-               		for (int i = 0; i < possibleIds.size() && !found; i ++) 
-               		{
-                  		if (possibleIds.get(i) == id)       // if the user entered id is equal to any of the possible ids
-                     	found = true;                       // then set found to true
-               		}
-			   		}
-			   		else
-			   		{
-			   			valid = true;                          // else if user entered the exit number, valid is true
-			   		}        
-			   			
-			   		if (found)                                // check if the id is found, if it is
-			   		{
-			   			valid = true;                          // then valid should be set to true
-			   		}
+               try
+               {
+                  id = sc.nextInt();         
+                  
+                  if (id != EXIT)                           // if user doesn't enter the exit number for id then we start looking through 
+                  {                                         // the list of possible ids and determine whether user entered a valid id
+                     for (int i = 0; i < possibleIds.size() && !found; i ++) 
+                     {
+                        if (possibleIds.get(i) == id)       // if the user entered id is equal to any of the possible ids
+                        found = true;                       // then set found to true
+                     }
+                  }
+                  else
+                  {
+                     valid = true;                          // else if user entered the exit number, valid is true
+                  }        
+                     
+                  if (found)                                // check if the id is found, if it is
+                  {
+                     valid = true;                          // then valid should be set to true
+                  }
                   
                   if (!valid)                               // if input id is invalid, output a message and ask user to reenter
                   {
                      System.out.print ("Invalid input, enter again: ");
                   }
    
-			     	}	
-				   catch (InputMismatchException ime)           // catch any input mismatch exception
-				   {	
-				   	System.out.print ("Invalid input, enter again: ");
+               }  
+               catch (InputMismatchException ime)           // catch any input mismatch exception
+               {  
+                  System.out.print ("Invalid input, enter again: ");
                   sc.nextLine();
-				   }
-			   }
-				System.out.println ();
-				
-			   if (id != EXIT)                                       // if the valid id is not equal to exit number
-			   {
-			   	if (answerQ(id))                                   // start answering the question, and if the question is answered successfully 
+               }
+            }
+            System.out.println ();
+            
+            if (id != EXIT)                                       // if the valid id is not equal to exit number
+            {
+               if (answerQ(id))                                   // start answering the question, and if the question is answered successfully 
                {
                   possibleIds.remove(Integer.valueOf(id));        // then this id is no longer possible to be selected in the next round and will be removed
                   for (int i = 0; i < possibleIds.size(); i ++)   // go through the possible ids to re-assign them new values since one id is removed
@@ -360,13 +364,13 @@ public class QNAAdmin extends QNAPage
                                                                    // to fill up the spot that was orginally taken by recently deleted question           
                   }
                }
-			   }  
+            }  
          }     
          else                                                     // else if no available question is found
          {
             System.out.println ("None");                          // print none
             id = EXIT;                                            // id is set to exit such that admin can automatically exit this page
-				System.out.println ();
+            System.out.println ();
          }
       } while (id != EXIT);                                       // don't exit until exit number is entered
    } // answerPrompt method
@@ -385,28 +389,28 @@ public class QNAAdmin extends QNAPage
          {                                                        // then admin starts choosing question to answer by entering id
             System.out.println ("Enter ID to answer a question (\"" + EXIT + "\" to stop): ");
             boolean valid = false;                                // boolean valid is set to false
-			   while (!valid)
-			   {
-			   	try
-			   	{
-			   		id = sc.nextInt();                              // if user enters an int that is either the exit number or within the reasonable range
-			   		if (id == EXIT || id>= 1 && id <= numUQs)       // (from 1 to number of unasnwered questions)
-			   		{
-			   			valid = true;                                // then valid is true
-			   		}
-			   		else
-			   		{                                               // otherwise admin has to re-enter until input is valid
-			   			System.out.print ("Invalid input, enter again: ");
-			   		}
-			   	}	
-			   	catch (InputMismatchException ime)                 // catch any input mismatch
-			   	{	
-			   		System.out.print ("Invalid input, enter again: ");
+            while (!valid)
+            {
+               try
+               {
+                  id = sc.nextInt();                              // if user enters an int that is either the exit number or within the reasonable range
+                  if (id == EXIT || id>= 1 && id <= numUQs)       // (from 1 to number of unasnwered questions)
+                  {
+                     valid = true;                                // then valid is true
+                  }
+                  else
+                  {                                               // otherwise admin has to re-enter until input is valid
+                     System.out.print ("Invalid input, enter again: ");
+                  }
+               }  
+               catch (InputMismatchException ime)                 // catch any input mismatch
+               {  
+                  System.out.print ("Invalid input, enter again: ");
                   sc.nextLine();
-			   	}
-			   }
-				
-				System.out.println ();
+               }
+            }
+            
+            System.out.println ();
             if (id != EXIT)                                       // if admin doesn't choose to exit
             {
                answerQ(id);                                       // call the answerQ method to answer chosen question
@@ -416,14 +420,14 @@ public class QNAAdmin extends QNAPage
          {
             System.out.println ("None");                          // output none
             id = EXIT;                                            // set id to equal exit number
-				System.out.println ();
+            System.out.println ();
          }      
       } while (id != EXIT);                                       // this process is repeated until id is set to be equal to exit number
    } // answerPrompt method
       
    public static boolean answerQ (int id)                         // this method takes admin through the process of answering a chosen question
-   {															  // parametre: id of chosen question
-   																  // returns: a boolean indicating whether question is successfully answered
+   {                                              // parametre: id of chosen question
+                                                     // returns: a boolean indicating whether question is successfully answered
       for (int i = 0; i < numUQs; i ++)                           // go through the number of unanswered questions
       {
          QNA temp = unansweredQNAs.get(i);
@@ -435,8 +439,8 @@ public class QNAAdmin extends QNAPage
             System.out.println ("Your answer (enter \"" + EXIT + "\" to not answer this question): ");
             sc.nextLine();
             answer = sc.nextLine();                                // user can choose to answer or not answer this question
-				System.out.println ();
-				
+            System.out.println ();
+            
             if (!answer.equals(EXITSTR))                           // if user doesn't enter the exit number
             {
                temp.setAnswer (answer);                            // the answer will be set for the unanswered QNA object
@@ -452,7 +456,7 @@ public class QNAAdmin extends QNAPage
    
    private static void post (QNA newQ)                            // this method uploads the newly answered QNA object to answered array list, and removes it from 
    {                                                              // the unanswered array list
-   																  // parametre: a QNA object that is going to be uploaded to the array list
+                                                     // parametre: a QNA object that is going to be uploaded to the array list
       int newId;                                                  // a new id will be assigned to that QNA object since it's moving to a new array list
       numQs ++;                                                   // number of answered questions increase by 1 
       newId = numQs;                                              // the new id will just be the number of questions in the array list
@@ -468,12 +472,17 @@ public class QNAAdmin extends QNAPage
             temp.setId (i+1);                                     // re-assign ids in numerical order for every one of them since a question has been removed
          }
          System.out.println ("The new Q&A has been uploaded.");   // print a sucess message
+         if (numUQs == 0)                                         // flush out enter key 
+         {
+            System.out.println ();
+            System.out.println ("*Press enter key to continue if you don't see a saving prompt:");
+         }
       }
-		System.out.println ();
+      System.out.println ();
    }
    
    private static void deletePrompt (ArrayList<Integer> possibleIds)    // this method prompts admin to delete available questions
-   {																							// parametre: an array list of ids of possible questions to be selected
+   {                                                                    // parametre: an array list of ids of possible questions to be selected
          int id = INITIAL;                                              // initialize id of question to be deleted
          do
          {
@@ -484,7 +493,7 @@ public class QNAAdmin extends QNAPage
             {
                int possibleId = possibleIds.get(i);                     // go through each possible id, and assign temporary variable "possibleId" one value at a time
                boolean found = false;                                   // initialize found to false, meaning the id hasn't been found from the array list of unanswered questions
-		         int beginning = 0, ending = unansweredQNAs.size()-1;     // use binary search: beginning index of array list: 0, ending: array list size-1                               
+               int beginning = 0, ending = unansweredQNAs.size()-1;     // use binary search: beginning index of array list: 0, ending: array list size-1                               
                int middle = INITIAL;                                    // index of middle value initialized
                                                          
                while (!found && beginning <= ending)           // while not found and not completely searched (beginning <= ending)
@@ -508,52 +517,52 @@ public class QNAAdmin extends QNAPage
             if (available)                                     // if some questions are available for admin to delete
             {
                System.out.println ("Enter ID to delete a question (\"" + EXIT + "\" to stop): ");
-				
-			                                                      // then admin has a chance to enter the id of the question they want to delete
-			      boolean valid = false;                          // boolean variable valid is set to false
-			      while (!valid)
-			      {
+            
+                                                               // then admin has a chance to enter the id of the question they want to delete
+               boolean valid = false;                          // boolean variable valid is set to false
+               while (!valid)
+               {
                   boolean found = false;                       // set boolean variable found to false, this variable is used to check if the id
                                                                // chosen by admin belongs to the list of possible ids
-			      	try
-			      	{
-			      		id = sc.nextInt();         
-			      		
-			      		if (id != EXIT)                           // if user doesn't enter the exit number for id then we start looking through 
-               		{                                         // the list of possible ids and determine whether user entered a valid id
-                  		for (int i = 0; i < possibleIds.size() && !found; i ++) 
-                  		{
-                     		if (possibleIds.get(i) == id)       // if the user entered id is equal to any of the possible ids
-                        	found = true;                       // then set found to true
-                  		}
-			      		}
-			      		else
-			      		{
-			      			valid = true;                          // else if user entered the exit number, valid is true
-			      		}        
-			      			
-			      		if (found)                                // check if the id is found, if it is
-			      		{
-			      			valid = true;                          // then valid should be set to true
-			      		}
+                  try
+                  {
+                     id = sc.nextInt();         
+                     
+                     if (id != EXIT)                           // if user doesn't enter the exit number for id then we start looking through 
+                     {                                         // the list of possible ids and determine whether user entered a valid id
+                        for (int i = 0; i < possibleIds.size() && !found; i ++) 
+                        {
+                           if (possibleIds.get(i) == id)       // if the user entered id is equal to any of the possible ids
+                           found = true;                       // then set found to true
+                        }
+                     }
+                     else
+                     {
+                        valid = true;                          // else if user entered the exit number, valid is true
+                     }        
+                        
+                     if (found)                                // check if the id is found, if it is
+                     {
+                        valid = true;                          // then valid should be set to true
+                     }
                      
                      if (!valid)                               // if input id is invalid, output a message and ask user to reenter
                      {
                         System.out.print ("Invalid input, enter again: ");
                      }
       
-			        	}	
-				      catch (InputMismatchException ime)           // catch any input mismatch exception
-				      {	
-				      	System.out.print ("Invalid input, enter again: ");
+                  }  
+                  catch (InputMismatchException ime)           // catch any input mismatch exception
+                  {  
+                     System.out.print ("Invalid input, enter again: ");
                      sc.nextLine();
-				      }
-			      }
-				   System.out.println ();
-					
-				   if (id != EXIT)                                       // if admin doesn't wish to exit
-				   {
-				   	if (deleteQ(id))                                   // call deleteQ method to delete question, and if done successfully
+                  }
+               }
+               System.out.println ();
+               
+               if (id != EXIT)                                       // if admin doesn't wish to exit
+               {
+                  if (deleteQ(id))                                   // call deleteQ method to delete question, and if done successfully
                   {
                      possibleIds.remove(Integer.valueOf(id));        // remove the id of deleted question from list of possible ids
                      for (int i = 0; i < possibleIds.size(); i ++)   
@@ -563,14 +572,15 @@ public class QNAAdmin extends QNAPage
                            possibleIds.set(i,Integer.valueOf(temp-1)); // move its id up by one since a question before it has been removed
                      }
                   }
-				   }
-				   sc.nextLine();
+               }
+              
+               //sc.nextLine();
             }
             else                                                     // if there are no available questions to delete
             {
                System.out.println ("None");                          // output none
                id = EXIT;                                            // set id to exit number
-					System.out.println ();
+               System.out.println ();
             }
          } while (id != EXIT);                                       // this process is repeated until id is set to equal the exit number
    } // deletePrompt method
@@ -589,54 +599,54 @@ public class QNAAdmin extends QNAPage
             {                                                        // then admin can enter ids to delete them
                System.out.println ("Enter ID to delete a question (\"" + EXIT + "\" to stop): ");
             
-				   boolean valid = false;                                // set boolean valid to false
-				   while (!valid)
-				   {
-				   	try
-				   	{
-				   		id = sc.nextInt();
-				   		if (id == EXIT || id>=1 && id<=numUQs)          // if user enters an int that either equals the exit number or is within the
-				   		{                                               // reasonable range (from 1 to number of unanswered questions)
-				   			valid = true;                                // valid is true
-				   		}
-				   		else
-				   		{                                               // otherwise user will be prompted to enter id again
-							   System.out.print ("Invalid input, enter again: ");
-				      	}
-				   	}	
-					   catch (InputMismatchException ime)                 // catch any input mismatch exception
-					   {	
-					   	System.out.println ("Invalid input, enter again: ");
-                  	sc.nextLine();
-					   }
-				   }
-					System.out.println ();
-					
+               boolean valid = false;                                // set boolean valid to false
+               while (!valid)
+               {
+                  try
+                  {
+                     id = sc.nextInt();
+                     if (id == EXIT || id>=1 && id<=numUQs)          // if user enters an int that either equals the exit number or is within the
+                     {                                               // reasonable range (from 1 to number of unanswered questions)
+                        valid = true;                                // valid is true
+                     }
+                     else
+                     {                                               // otherwise user will be prompted to enter id again
+                        System.out.print ("Invalid input, enter again: ");
+                     }
+                  }  
+                  catch (InputMismatchException ime)                 // catch any input mismatch exception
+                  {  
+                     System.out.println ("Invalid input, enter again: ");
+                     sc.nextLine();
+                  }
+               }
+               System.out.println ();
+               
                if (id != EXIT)                                       // if user doesn't wish to exit
                {
                   deleteQ(id);                                       // call the deleteQ method to delete chosen question
                }
-			   sc.nextLine();
+            //sc.nextLine(); this seems to work when we tested the QNASystem but Information System only works without this line...
             }
             else                                                     // if no available unanswered questions found
             {
                System.out.println ("None");                          // output none
                id = EXIT;                                            // set id to exit number
-					System.out.println ();
+               System.out.println ();
             }
          } while (id != EXIT);                                       // this process is repeated until id is set to equal exit number
    }  // deletePrompt method
    
    private static boolean deleteQ (int id)                           // this method takes admin through the process of deleting a question
-   {																 	 					// parametre: the id of the question to be deleted
-   	boolean found = false;														// returns: a boolean indicating whether question is deleted successfully 
+   {                                                                 // parametre: the id of the question to be deleted
+      boolean found = false;                                         // returns: a boolean indicating whether question is deleted successfully 
       for (int i = 0; i < numUQs && !found; i ++)                              
       {
          QNA temp = unansweredQNAs.get(i);                           // if temporary QNA object id matches what user entered
          int tempId = temp.getId();
          if (id == tempId)
          {
-				found = true;
+            found = true;
             System.out.println ("Question: " + temp.getQuestion());  // output the question and ask user to confirm whether they want to delete it
             System.out.println ("Do you want to delete this question?");
             System.out.println ("1. Yes " + "2. No");
@@ -644,28 +654,28 @@ public class QNAAdmin extends QNAPage
             int choice = INITIAL;                                    // variable choice is initialized
             
             boolean valid = false;
-				while (!valid)
-				{
-					try
-					{
-						choice = sc.nextInt();                             // user enters choice until it's either 1 or 2
-						if (choice == 1 || choice == 2)                    // this extra step is to ensure user will not accidentally delete anything
-						{
-							valid = true;                                   // then valid becomes true
-						}
-						else
-						{                                                  // otherwise prompt user to enter a useful value
-							System.out.print ("Invalid input, enter again: ");
-						}
-					}	
-					catch (InputMismatchException ime)                    // catch any input mismatch exception
-					{	
-						System.out.print ("Invalid input, enter again: ");
-               	sc.nextLine();
-					}
-				}
- 				System.out.println ();
-				
+            while (!valid)
+            {
+               try
+               {
+                  choice = sc.nextInt();                             // user enters choice until it's either 1 or 2
+                  if (choice == 1 || choice == 2)                    // this extra step is to ensure user will not accidentally delete anything
+                  {
+                     valid = true;                                   // then valid becomes true
+                  }
+                  else
+                  {                                                  // otherwise prompt user to enter a useful value
+                     System.out.print ("Invalid input, enter again: ");
+                  }
+               }  
+               catch (InputMismatchException ime)                    // catch any input mismatch exception
+               {  
+                  System.out.print ("Invalid input, enter again: ");
+                  sc.nextLine();
+               }
+            }
+            System.out.println ();
+            
             if (choice == 1)                                         // if user chooses to delete the question
             {
                unansweredQNAs.remove(temp);                          // the QNA object (represented by temp) will be removed from array list
@@ -682,14 +692,14 @@ public class QNAAdmin extends QNAPage
                return false;                                         // if user doesn't wish to delete question anymore, return false
          }
       }
-		System.out.println ();
+      System.out.println ();
       return false;
    } // deleteQ method
    
    public static void addCategory ()            // this method helps admin add new categories to the array list of categories, and write new info to file            
    {
       String newCategory;                       // declare a new variable called newCategory
-		sc.nextLine();
+      sc.nextLine();
       do
       {
          System.out.println("\n--- Add Category ---");
@@ -700,7 +710,7 @@ public class QNAAdmin extends QNAPage
             categories.add(newCategory);        // add the new name to array list
             numCategory ++;                     // increase number of categories by 1
          }
-			System.out.println ();
+         System.out.println ();
       } while (!newCategory.equals(EXITSTR));   // repeat until user enters exit number
       
       try

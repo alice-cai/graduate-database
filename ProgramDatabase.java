@@ -3,17 +3,17 @@ import java.io.*;
 
 public class ProgramDatabase
 {	
-	private final String PROGRAM = "programs/Program Overview.txt";
-	private final String MENU = "pprograms/rogram database menu.txt";
-	private final String ORDER = "programs/sort.txt";
-   private final String END = "end of course requirement";
-   private final double HIGHESTMARK = 100.0;
-	private ArrayList<Program> programs;
-	private PastData_Manager pastdata;
-	private ArrayList<String> menu;
-   private ArrayList<String> order;
+	private static final String PROGRAM = "programs/program_overview.txt";
+	private static final String MENU = "programs/program_database_menu.txt";
+	private static final String ORDER = "programs/sort.txt";
+	private static final String END = "end of course requirement";
+	private static final double HIGHESTMARK = 100.0;
+	private static ArrayList<Program> programs;
+	private static PastData_Manager pastdata;
+	private static ArrayList<String> menu;
+	private static ArrayList<String> order;
    
-	public ProgramDatabase()
+	public static void initialize ()
 	{
 		menu = Method.readMenu(MENU);
 		order = Method.readMenu(ORDER);
@@ -84,21 +84,21 @@ public class ProgramDatabase
       }
       catch (IOException iox)
       {
-         System.out.println("Cannot load file...");
+         System.out.println("Cannot load ProgramDatabase file...");
       }
 	}
 	
-	public ArrayList<Program> getProgram()
+	public static ArrayList<Program> getProgram()
 	{
 		return programs;
-	} // for debugging
+	}
 
-	public int getProgramNumber()
+	public static int getProgramNumber()
 	{
 		return programs.size();
 	}
 
-	public void displayMenu()
+	public static void displayMenu()
 	{
 		boolean exit = false;
 		int option = menu.size();
@@ -106,60 +106,60 @@ public class ProgramDatabase
 		String input;
 		ArrayList<Program> p = new ArrayList<Program>();
 		double mark;
-
 		do
 		{
-         Method.displayMenu(menu);
+			System.out.println("\n--- Program Database ---");
+         	Method.displayMenu(menu);
 			switch(Method.getOption(option))
 			{
 				case 1:
-               System.out.print("Enter the OUAC code: ");
-               input = Method.sc.nextLine();
-               p = searchByCode(input);
+					System.out.print("\nEnter the OUAC code: ");
+					input = Method.sc.nextLine();
+					p = searchByCode(input);
 					Method.outputPrograms(p);
-				break;
+					break;
 				case 2:
-               System.out.print("Enter the university: ");
-               input = Method.sc.nextLine();
-               p = searchByUni(input);
+					System.out.print("\nEnter the university: ");
+					input = Method.sc.nextLine();
+					p = searchByUni(input);
 					Method.outputPrograms(p);
 					break;
 				case 3:
-               System.out.print("Enter the major: ");
-               input = Method.sc.nextLine();
-               p = searchByMajor(input);
+					System.out.print("\nEnter the major: ");
+					input = Method.sc.nextLine();
+					p = searchByMajor(input);
 					Method.outputPrograms(p);
 					break;
 				case 4:
-					System.out.print("Enter the program name: ");
-               input = Method.sc.nextLine();
-               p = searchByProgram(input);
+					System.out.print("\nEnter the program name: ");
+					input = Method.sc.nextLine();
+					p = searchByProgram(input);
 					Method.outputPrograms(p);
-				   break;
+					break;
 				case 5:
-               mark=Method.getMark(HIGHESTMARK);
-               Method.displayMenu(order);
-               p = searchByAdmissionAverage(mark);
-               switch(Method.getOption(order.size()))
-               {
-                  case 1:
-                     Collections.reverse(p);
+					mark=Method.getMark(HIGHESTMARK);
+					Method.displayMenu(order);
+					p = searchByAdmissionAverage(mark);
+					switch(Method.getOption(order.size()))
+					{
+						case 1:
+							Collections.reverse(p);
 							Method.outputPrograms(p);
 							break;
-                  case 2:
+						case 2:
 							Collections.sort(p);
 							Method.outputPrograms(p);
 							break;
-               }
-               break;
-            case 6:
+					}
+               		break;
+            	case 6:
 					exit = true;
-               break;
+               	break;
 			}
 		}while(!exit);
 	}	
 	
-	public ArrayList<Program> searchByUni(String s)
+	public static ArrayList<Program> searchByUni(String s)
 	{
 		ArrayList<Program> p = new ArrayList<Program>();
 		int size = programs.size();
@@ -171,7 +171,7 @@ public class ProgramDatabase
 		return p;
 	}
    
-	public ArrayList<Program> searchByCode(String s)
+	public static ArrayList<Program> searchByCode(String s)
 	{
 		ArrayList<Program> p = new ArrayList<Program>();
 		int size = programs.size();
@@ -183,7 +183,7 @@ public class ProgramDatabase
 		return p;
 	}
 	
-	public ArrayList<Program> searchByMajor(String s)
+	public static ArrayList<Program> searchByMajor(String s)
 	{
 		ArrayList<Program> p = new ArrayList<Program>();
 		int size = programs.size();
@@ -195,7 +195,7 @@ public class ProgramDatabase
 		return p;
 	}
 
-	public ArrayList<Program> searchByProgram(String s)
+	public static ArrayList<Program> searchByProgram(String s)
 	{
 		ArrayList<Program> p = new ArrayList<Program>();
 		int size = programs.size();
@@ -207,7 +207,7 @@ public class ProgramDatabase
 		return p;
 	}
 	
-	public ArrayList<Program> searchByAdmissionAverage(double k)
+	public static ArrayList<Program> searchByAdmissionAverage(double k)
 	{
 		ArrayList<Program> p = new ArrayList<Program>();
 		int size = programs.size();
@@ -219,7 +219,7 @@ public class ProgramDatabase
 		return p;
 	}
 
-	public void addProgram()// by prompt
+	public static void addProgram()// by prompt
 	{
 		Program p = new Program(programs.size());
 		programs.add(p);
@@ -245,40 +245,40 @@ public class ProgramDatabase
 		// input info about the program here
 	}*/
    
-	public void deleteProgram()
+	public static void deleteProgram()
 	{
-		  Method.displayProgramList(programs);
-        System.out.print("Enter the program number to be deleted: ");
-        deleteProgram(Method.getOption(programs.size()+1)-2);
-        saveData();
+		Method.displayProgramList(programs);
+		System.out.print("Enter the program number to be deleted: ");
+		deleteProgram(Method.getOption(programs.size()+1)-2);
+		saveData();
 	}// delete from a list
 	
-	public void deleteProgram(int index)
+	public static void deleteProgram(int index)
 	{
-      int size = programs.size();
-      String input;
-      
-      if (index >=0 && index < size)
-      {
-   		programs.remove(index);
-         for (int i = index; i < size-1; i++)
-         {
-            programs.get(i).setID(programs.get(i).getId()-1);
-         }
-         System.out.println("Program deleted.");
-   		System.out.print("Press any key to return to previous menu.");
-   		input = Method.sc.nextLine(); 
-      }
-      else if (index!=-1)
-      {
-         System.out.println("Deletion unsuccessful.");
-   		System.out.print("Press any key to return to previous menu.");
-   		input = Method.sc.nextLine(); 
-      }
+		int size = programs.size();
+		String input;
+
+		if (index >=0 && index < size)
+		{
+			programs.remove(index);
+			for (int i = index; i < size-1; i++)
+			{
+				programs.get(i).setID(programs.get(i).getId()-1);
+			}
+			System.out.println("Program deleted.");
+			System.out.print("Press any key to return to previous menu.");
+			input = Method.sc.nextLine(); 
+		}
+		else if (index!=-1)
+		{
+			System.out.println("Deletion unsuccessful.");
+			System.out.print("Press any key to return to previous menu.");
+			input = Method.sc.nextLine(); 
+		}
 	}
    
 
-	private void saveData()
+	private static void saveData()
 	{
 		try
 		{

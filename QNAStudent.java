@@ -108,8 +108,11 @@ public class QNAStudent extends QNAPage
 					askQ();                      	// ask and upload questions
 					break; 
 			}
-		} while (option != EXIT);              		// repeat until user enters exit number
-
+		} while (option != EXIT);              // repeat until user enters exit number
+      answeredQNAs.clear();                  // clear all array lists before next user loads information again
+      categories.clear();
+      menu.clear();
+      unansweredQNAs.clear();
 	} // displayMenu method
    
 	private static void askQ ()               		// this method prompts student to ask a question

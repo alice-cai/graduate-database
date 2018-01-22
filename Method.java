@@ -5,7 +5,7 @@ public class Method {
 	public static final int CURYEAR = 2018;
 	public static final int PASTDATA = 5;
 	public static Scanner sc = new Scanner(System.in);
-	public static final String ERROR = "List not found, press 1 to return to previous menu...";
+	public static final String ERROR = "\nList not found, press 1 to return to previous menu...";
     
 	public static boolean inputCheck (String s, int option)
 	{
@@ -75,12 +75,12 @@ public class Method {
 	 public static int getOption (int option)
 	 {
 	 		String choice;
-	 		System.out.print("Enter your choice:");
+	 		System.out.print("Enter your choice: ");
 			choice = sc.nextLine();
 			while (!inputCheck(choice, option))
 			{
 				System.out.println("The previous entry is invalid.");
-				System.out.print("Enter your choice:");
+				System.out.print("Enter your choice: ");
 				choice = sc.nextLine();
 			}
 			return Integer.parseInt(choice);
@@ -94,7 +94,7 @@ public class Method {
 			while (!inputCheck(choice, number))
 			{
 				System.out.println("The previous entry is invalid.");
-				System.out.print("Enter your choice:");
+				System.out.print("Enter your choice: ");
 				choice = sc.nextLine();
 			}
 			return Double.parseDouble(choice);
@@ -129,11 +129,12 @@ public class Method {
 	{
 		if(p.isEmpty())
 		{
-			System.out.print(ERROR);
+			System.out.println(ERROR);
 			Method.getOption(1);
 		}
 		else
 		{
+			System.out.println("\n--- Programs ---");
 			Method.displayProgramList(p);
 			int input = Method.getOption(p.size()+1);
 			if (input > 1)
