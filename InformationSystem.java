@@ -3,7 +3,7 @@ import java.util.*;
 
 public class InformationSystem {
 	private static String MENU_FILE = "user_menus/Main_Menu.txt";
-	private static int EXIT = -1;
+	private static String EXIT = "-1";
 	private UserDatabase users;
 	private ProgramDatabase programs;
 	private GraduateDatabase graduateDatabase;
@@ -192,9 +192,12 @@ public class InformationSystem {
 				sc.nextLine();
 			} catch (InputMismatchException ime) {
 				sc.nextLine();
-				System.out.println("Invalid input.");
 			}
-		} while (!(numCourses > 0));
+			if (!(numCourses > 0 && numCourses <= CourseTracker.MAX_COURSES)) {
+				System.out.println("Invalid input. Please enter a number between 1 and 8.");
+				numCourses = 0;
+			}
+		} while (numCourses == 0);
 
 		ArrayList<ActiveCourse> courseList = new ArrayList<>();
 
