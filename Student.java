@@ -195,9 +195,8 @@ public class Student extends User {
 		sc.nextLine();
 	}
 
-	// READ OVER THIS METHOD
 	public void addCourse () {
-		final String EXIT = -1;
+		final String EXIT = "-1";
 		String courseCode;
 		int mark = -1;
 
