@@ -27,26 +27,6 @@ public class ContactInfo
 	      System.out.print ("Enter contact person: ");
 	      person=sc.nextLine();
 	   }//This is initilized from admin's input
-
-   public String getPhone()
-   {
-      return phone;
-   }
-
-   public String getEmail()
-   {
-      return email;
-   }
-
-   public String getPerson()
-   {
-      return person;
-   }
-
-   public String getAddress()
-   {
-      return address;
-   }
    
 	public void display()
 	{
