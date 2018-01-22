@@ -1,7 +1,9 @@
 import java.util.*;
+import java.io.*;
 
 public class AdditionalInfo
 {
+
 	private String scholarship;
 	private String supplementary;
 	private String earlyAdm;
@@ -12,17 +14,33 @@ public class AdditionalInfo
 		supplementary = su;
 		earlyAdm = e;
 	}
-
-	public AdditionalInfo()
+   
+   public AdditionalInfo()
 	{
-		System.out.print ("Enter scholarship options: ");
-		scholarship=Method.sc.nextLine();
-		System.out.print ("Enter supplementary requirement: ");
-		supplementary=Method.sc.nextLine();
-		System.out.print ("Enter early admission information: ");
-		earlyAdm=Method.sc.nextLine();
-	}
+      System.out.print ("Enter scholarship options: ");
+      scholarship=Method.sc.nextLine();
+      System.out.print ("Enter supplementary requirement: ");
+      supplementary=Method.sc.nextLine();
+      System.out.print ("Enter early admission information: ");
+      earlyAdm=Method.sc.nextLine();
 
+	}
+   
+   public String getScholarship()
+   {
+      return scholarship;
+   }  
+   
+   public String getSupplementary()
+   {
+      return supplementary;
+   }
+   
+   public String getEarlyAdm()
+   {
+      return earlyAdm;
+   }
+   
 	public void display()
 	{
 		String input;
@@ -35,4 +53,23 @@ public class AdditionalInfo
 	{
 		return("Scholarship options: " + scholarship + "\nSupplementary requirement: " + supplementary + "\nEarly admission date: "+ earlyAdm +"\n");
 	}
+
+   
+   public void save (String file)
+   {
+      try
+      {
+         BufferedWriter out = new BufferedWriter(new FileWriter(file,true));
+         out.write(scholarship);out.newLine();
+         out.write(supplementary);out.newLine();
+         out.write(earlyAdm);out.newLine();
+         out.close();
+      }
+      catch(IOException iox)
+      {
+         System.out.println("Problem saving additional information.");
+      }
+   }
+	
+	
 }
