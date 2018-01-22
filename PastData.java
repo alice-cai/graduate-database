@@ -18,7 +18,7 @@ public class PastData
 		this.mean = mean;
 		this.median = median;
 		admissionCount = admission;
-	}
+	}//This is initilized from the Program Database class
 	
 	public void display()
 	{
@@ -26,20 +26,20 @@ public class PastData
 		System.out.print(this);
 		System.out.print("Press any key to return to previous menu.");
 		input = Method.sc.nextLine(); // this outputs all the information of the data of a certain year of a program.
-	}
+	}//This is initilized from admin's input
 	
 	public boolean checkProgram(int n)
 	{
 		return (n==program);
-	}
+	}// Checks if the programID (n) corresponds with the past data object
 	
 	public int getYear()
 	{
 		return year;
-	}
+	}//returns the year of the data
 	
 	public String toString()
 	{
 		return("Year: " + year + "\nLowest average admitted: " + lowestAverage + "\nMean of admission average: " + mean + "\nMedian of admission average: " + median + "\nTotal admission: " + admissionCount+ "\n");
-	}
+	}//For displaying purposes
 }
