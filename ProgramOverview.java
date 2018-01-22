@@ -9,7 +9,7 @@ public class ProgramOverview
 	private boolean coop;
 	private int enrollment;
 	private double admissionAverage;
-   Scanner sc = new Scanner (System.in);
+	Scanner sc = new Scanner (System.in);
 	
 	public ProgramOverview(String n, String u, String o, String m, boolean c, int e, double a)
 	{
@@ -34,9 +34,10 @@ public class ProgramOverview
       		major=sc.nextLine();
       		System.out.print ("Enter enrollment number: ");
       		enrollment=sc.nextInt();
-      		System.out.print ("Enter coop option (true or false): ");
+      		System.out.print ("Enter coop option (enter \"ture\" for true, and anything else for false): ");
+            sc.next();
       		coop=Boolean.parseBoolean(sc.nextLine().toLowerCase());
-            System.out.print ("Enter admission average: ");
+            System.out.print ("Enter anticipated admission average: ");
       		admissionAverage=Double.parseDouble(sc.nextLine());
 	}
 
@@ -68,22 +69,22 @@ public class ProgramOverview
 		return ouacCode; 
 	}
 	
-   public double getAverage()
-   {
-      return admissionAverage;
-   }
+	public double getAverage()
+	{
+		return admissionAverage;
+	}
    
 	public String overview()
-   {
-      return ("Program name: " + name + "\nUniversity: " + university + "\nOUAC code : "+ ouacCode + "\nMajor: " + major);
-   }
+	{
+		return ("Program name: " + name + "\nUniversity: " + university + "\nOUAC code : "+ ouacCode + "\nMajor: " + major + "\nAdmisision average: " + admissionAverage+"\n");
+	}
 	
 	public String toString ()
 	{
 		String s = ("Program name: " + name + "\nUniversity: " + university + "\nOUAC code : "+ ouacCode + "\nMajor: " + major + "\nCoop option: ");
 		s+= (coop?"Yes":"No");
-		s+= "\nEnrollment: " + enrollment + "\n";
-		s+= "Admission average: " + admissionAverage;
+		s+= "\nEnrollment: " + ((enrollment>0)?enrollment:"Unknown") + "\n";
+		s+= "Admission average: " + (admissionAverage>0? admissionAverage : "unknown") + "\n";
 		return s;
 	}
 	

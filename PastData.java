@@ -40,6 +40,6 @@ public class PastData
 	
 	public String toString()
 	{
-		return("Year: " + year + "\nLowest average admitted: " + lowestAverage + "\nMean of admission average: " + mean + "\n Median of admission average: " + median + "\n Total admission: " + admissionCount);
+		return("Year: " + year + "\nLowest average admitted: " + lowestAverage + "\nMean of admission average: " + mean + "\nMedian of admission average: " + median + "\nTotal admission: " + admissionCount+ "\n");
 	}
 }

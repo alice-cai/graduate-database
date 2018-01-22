@@ -1,5 +1,5 @@
 /**
-* GraduateDatabse.java
+* GraduateDatabase.java
 * Keeps track of all Graduate objects. Responsible for reading from file,
 * saving to file, adding new Graduates, and removing outdated data.
 */
@@ -130,7 +130,6 @@ public class GraduateDatabase {
 		}
 	}
 
-	// String graduateID, String firstName, String lastName, Course[] topSixCourses, double topSixAverage, String university, int programID, int yearGraduated
 	public void addGraduate (String oen, String firstName, String lastName, Course[] topSixCourses, double topSixAverage, String university, int programID) {
 		Graduate graduate = new Graduate(oen, firstName, lastName, topSixCourses, topSixAverage, university, programID, currentYear);
 		graduateList.add(graduate);
@@ -204,10 +203,10 @@ public class GraduateDatabase {
 			}
 		}
 
-		Double[] graduateMarksArray = (Double[])(graduateMarks.toArray());
+		Object[] graduateMarksArray = (graduateMarks.toArray());
 		Arrays.sort(graduateMarksArray);
 
-		return graduateMarksArray[graduateMarksArray.length/2];
+		return (double)graduateMarksArray[graduateMarksArray.length/2];
 	}
 
 	/**

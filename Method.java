@@ -5,9 +5,9 @@ public class Method {
 	public static final int CURYEAR = 2018;
 	public static final int PASTDATA = 5;
 	public static Scanner sc = new Scanner(System.in);
-   public static final String ERROR = "List not found, press 1 to return to previous menu...";
+	public static final String ERROR = "List not found, press 1 to return to previous menu...";
     
-   public static boolean inputCheck (String s, int option)
+	public static boolean inputCheck (String s, int option)
 	{
 		try
 		{
@@ -21,8 +21,23 @@ public class Method {
 			return false;
 		}
 	}
-    
-   public static boolean inputCheck (String s, double number)
+   
+    public static boolean inputCheck (String s)
+	{
+		try
+		{
+			if( Integer.parseInt(s)<0)
+			   return false;
+         else
+            return true;
+		}
+		catch(NumberFormatException nfe)
+		{
+			return true;
+		}
+	}
+   
+    public static boolean inputCheck (String s, double number)
 	{
 		try
 		{
@@ -37,23 +52,23 @@ public class Method {
 		}
 	}
    
-	 public static ArrayList <String> readMenu(String file)
-	 {
-	 	ArrayList<String> menu = new ArrayList<String> ();
-	 	try 
-      {
-         BufferedReader in = new BufferedReader(new FileReader(file));
+	public static ArrayList <String> readMenu(String file)
+	{
+		ArrayList<String> menu = new ArrayList<String> ();
+		try 
+		{
+			BufferedReader in = new BufferedReader(new FileReader(file));
 			String line;
 			while ((line = in.readLine())!= null)
 			{
 				menu.add(line);
 			}
 			in.close();
-      }
-      catch (IOException iox)
-      {
+		}
+		catch (IOException iox)
+		{
 			System.out.print("Cannot load files.");
-      }
+		}
 		return menu;
 	 }
 	 
@@ -87,11 +102,10 @@ public class Method {
     
     public static void displayProgramList(ArrayList<Program> p)
     {
-         int i = 1;
-         System.out.println(i++ +". return to previous list");
-   		for ( ; i < p.size(); i++)
-         	System.out.println(i+ ". " + p.get(i));
-
+        int i = 1;
+        System.out.println(i++ +". return to previous list");
+   		for ( ; i <= p.size()+1; i++)
+         	System.out.println(i+ ". " + p.get(i-2));
     }
     
    public static void displayPastData(ArrayList<PastData> p)
@@ -112,25 +126,26 @@ public class Method {
     }
     
     public static void outputPrograms(ArrayList<Program> p)
-	 {
-      if(p.isEmpty())
-      {
-         System.out.print(ERROR);
-         Method.getOption(1);
-      }
-      else
-      {
-         Method.displayProgramList(p);
-         int input = Method.getOption(p.size()+1);
-         if (input > 1)
-            p.get(input).displayMenu();
-      }
+	{
+		if(p.isEmpty())
+		{
+			System.out.print(ERROR);
+			Method.getOption(1);
+		}
+		else
+		{
+			Method.displayProgramList(p);
+			int input = Method.getOption(p.size()+1);
+			if (input > 1)
+				p.get(input-2).displayMenu();
+		}
 	}
-   public static boolean trueOrFalse(String s)
-   {
-      if (s.toLowerCase().equals("yes"))
-         return true;
-      else
-         return false;
-   }
+   
+	public static boolean trueOrFalse(String s)
+	{
+		if (s.toLowerCase().equals("yes"))
+			return true;
+		else
+			return false;
+	}
 }
