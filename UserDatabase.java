@@ -13,7 +13,7 @@ public class UserDatabase {
 
 	private ArrayList<Admin> adminTracker;
 	private ArrayList<Student> studentTracker;
-	public static ProgramDatabase programDatabase;
+	public static ProgramDatabase programDatabase; // How can this not be public??
 	private GraduateDatabase graduateDatabase;
 
 	public UserDatabase (GraduateDatabase graduateDatabase) {
