@@ -162,12 +162,15 @@ public class Student extends User {
 					updateCourseMark();
 					break;
 				case 7:
-					changeUsername();
+					getTopSixAverage();
 					break;
 				case 8:
-					changePassword();
+					changeUsername();
 					break;
 				case 9:
+					changePassword();
+					break;
+				case 10:
 					keepOnGoing = false;
 					break;
 			}
@@ -316,6 +319,50 @@ public class Student extends User {
 		} while (mark == Double.NaN);
 
 		System.out.println("Mark updated successfully!");
+	}
+
+	public void getTopSixAverage () {
+		displayCourseList();
+
+		ArrayList<ActiveCourse> currentCourses = courseTracker.getCourseList();
+		ArrayList<Integer> selectedCourses = new ArrayList<>();
+		int choice = 0;
+
+		System.out.println("\nEnter the indicies of the courses that you are using for your top six:");
+		for (int i = 0; i < GraduateDatabase.NUM_COURSES; i++) {
+			while (choice == 0) {
+				try {
+					System.out.print("Course #" + (i+1) + ": ");
+					choice = sc.nextInt();
+					sc.nextLine();
+				} catch (InputMismatchException ime) {
+					sc.nextLine();
+				}
+
+				if (!(choice > 0 && choice <= currentCourses.size()) || selectedCourses.contains(choice-1)) {
+					System.out.println("Invalid input!");
+					choice = 0;
+				}
+			}
+			selectedCourses.add(choice-1);
+			choice = 0;
+		}
+
+		Course[] topSixCourses = new Course[GraduateDatabase.NUM_COURSES];
+		int markSum = 0;
+		for (int i = 0; i < selectedCourses.size(); i++) {
+			int courseIndex = selectedCourses.get(i);
+			ActiveCourse selectedCourse = currentCourses.get(courseIndex);
+			topSixCourses[i] = new Course(selectedCourse.getCourseCode(), selectedCourse.getMark());
+			markSum += selectedCourse.getMark();
+		}
+
+		double topSixAverage = courseTracker.checkAverageTopSixRecursion(topSixCourses);
+
+		System.out.println("\n--- Current Average ---");
+		System.out.printf("Average: %.2f%%%n", topSixAverage);
+		System.out.println("Enter anything to return to the previous menu: ");
+		sc.nextLine();
 	}
 
 	public void changePassword () {

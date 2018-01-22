@@ -104,7 +104,7 @@ public class ProgramDatabase
 		int option = menu.size();
 
 		String input;
-		ArrayList<Program> p = new ArrayList<Program>();
+		ArrayList<Program> programList = new ArrayList<Program>();
 		double mark;
 		do
 		{
@@ -115,40 +115,40 @@ public class ProgramDatabase
 				case 1:
 					System.out.print("\nEnter the OUAC code: ");
 					input = Method.sc.nextLine();
-					p = searchByCode(input);
-					Method.outputPrograms(p);
+					programList = searchByCode(input);
+					Method.outputPrograms(programList);
 					break;
 				case 2:
 					System.out.print("\nEnter the university: ");
 					input = Method.sc.nextLine();
-					p = searchByUni(input);
-					Method.outputPrograms(p);
+					programList = searchByUni(input);
+					Method.outputPrograms(programList);
 					break;
 				case 3:
 					System.out.print("\nEnter the major: ");
 					input = Method.sc.nextLine();
-					p = searchByMajor(input);
-					Method.outputPrograms(p);
+					programList = searchByMajor(input);
+					Method.outputPrograms(programList);
 					break;
 				case 4:
 					System.out.print("\nEnter the program name: ");
 					input = Method.sc.nextLine();
-					p = searchByProgram(input);
-					Method.outputPrograms(p);
+					programList = searchByProgram(input);
+					Method.outputPrograms(programList);
 					break;
 				case 5:
 					mark=Method.getMark(HIGHESTMARK);
 					Method.displayMenu(order);
-					p = searchByAdmissionAverage(mark);
+					programList = searchByAdmissionAverage(mark);
 					switch(Method.getOption(order.size()))
 					{
 						case 1:
-							Collections.reverse(p);
-							Method.outputPrograms(p);
+							//Collections.reverse(programList);
+							Method.outputPrograms(sortReverse(programList));
 							break;
 						case 2:
-							Collections.sort(p);
-							Method.outputPrograms(p);
+							//Collections.sort(programList);
+							Method.outputPrograms(sort(programList));
 							break;
 					}
                		break;
@@ -156,73 +156,134 @@ public class ProgramDatabase
 					exit = true;
                	break;
 			}
-		}while(!exit);
-	}	
+		} while(!exit);
+	}
+	
+	public static ArrayList<Program> sort(ArrayList<Program> programList) {
+		boolean sorted = true;
+		Program[] temp = convertArrayListToArray(programList);
+		for(int i = temp.length-1; i > 0; i--){
+			sorted = true;
+			for(int j = 0; j < i; j++){
+				if(temp[j].compareTo(temp[j+1]) > 0){
+					sorted = false;
+					Program temporary = temp[j];
+					temp[j] = temp[j+1];
+					temp[j+1] = temporary;
+				}
+			}
+		}
+		return convertArrayToArrayListAscending(temp);
+	}
+	
+	public static ArrayList<Program> sortReverse(ArrayList<Program> programList) {
+		boolean sorted = true;
+		Program[] temp = convertArrayListToArray(programList);
+		for(int i = temp.length-1; i > 0; i--){
+			sorted = true;
+			for(int j = 0; j < i; j++){
+				if(temp[j].compareTo(temp[j+1]) > 0){
+					sorted = false;
+					Program temporary = temp[j];
+					temp[j] = temp[j+1];
+					temp[j+1] = temporary;
+				}
+			}
+		}
+		return convertArrayToArrayListDescending(temp);
+	}
+
+	private static Program[] convertArrayListToArray (ArrayList<Program> programList) {
+		Program[] newList = new Program[programList.size()];
+
+		for (int i = 0; i < programList.size(); i++) {
+			newList[i] = programList.get(i);
+		}
+
+		return newList;
+	}
+
+	private static ArrayList<Program> convertArrayToArrayListAscending(Program[] programList) {
+		ArrayList<Program> temp = new ArrayList<>();
+		for(int i=0; i<programList.length; i++){
+			temp.add(programList[i]);
+		}
+
+		return temp;
+	}
+	private static ArrayList<Program> convertArrayToArrayListDescending(Program[] programList) {
+		ArrayList<Program> temp = new ArrayList<>();
+		for(int i=programList.length-1; i>=0; i--){
+			temp.add(programList[i]);
+		}
+
+		return temp;
+	}
 	
 	public static ArrayList<Program> searchByUni(String s)
 	{
-		ArrayList<Program> p = new ArrayList<Program>();
+		ArrayList<Program> programList = new ArrayList<Program>();
 		int size = programs.size();
 		for (int i = 0; i < size; i++)
 		{
 			if (programs.get(i).searchUni(s))
-				p.add(programs.get(i)); //add the element from the list programs
+				programList.add(programs.get(i)); //add the element from the list programs
 		}
-		return p;
+		return programList;
 	}
    
 	public static ArrayList<Program> searchByCode(String s)
 	{
-		ArrayList<Program> p = new ArrayList<Program>();
+		ArrayList<Program> programList = new ArrayList<Program>();
 		int size = programs.size();
 		for (int i = 0; i < size; i++)
 		{
 			if (programs.get(i).searchOuacCode(s))
-				p.add(programs.get(i)); //add the element from the list programs
+				programList.add(programs.get(i)); //add the element from the list programs
 		}
-		return p;
+		return programList;
 	}
 	
 	public static ArrayList<Program> searchByMajor(String s)
 	{
-		ArrayList<Program> p = new ArrayList<Program>();
+		ArrayList<Program> programList = new ArrayList<Program>();
 		int size = programs.size();
 		for (int i = 0; i < size; i++)
 		{
 			if (programs.get(i).searchMajor(s))
-				p.add(programs.get(i)); //add the element from the list programs
+				programList.add(programs.get(i)); //add the element from the list programs
 		}
-		return p;
+		return programList;
 	}
 
 	public static ArrayList<Program> searchByProgram(String s)
 	{
-		ArrayList<Program> p = new ArrayList<Program>();
+		ArrayList<Program> programList = new ArrayList<Program>();
 		int size = programs.size();
 		for (int i = 0; i < size; i++)
 		{
 			if (programs.get(i).searchProgram(s))
-				p.add(programs.get(i)); //add the element from the list programs
+				programList.add(programs.get(i)); //add the element from the list programs
 		}
-		return p;
+		return programList;
 	}
 	
 	public static ArrayList<Program> searchByAdmissionAverage(double k)
 	{
-		ArrayList<Program> p = new ArrayList<Program>();
+		ArrayList<Program> programList = new ArrayList<Program>();
 		int size = programs.size();
 		for (int i = 0; i < size; i++)
 		{
 			if (programs.get(i).lowerThan(k))
-				p.add(programs.get(i)); //add the element from the list programs
+				programList.add(programs.get(i)); //add the element from the list programs
 		}
-		return p;
+		return programList;
 	}
 
 	public static void addProgram()// by prompt
 	{
-		Program p = new Program(programs.size());
-		programs.add(p);
+		Program programList = new Program(programs.size());
+		programs.add(programList);
 		saveData();
 		//intitate all variables with user input.
 		
@@ -233,7 +294,7 @@ public class ProgramDatabase
 		int year;
 		String input;
 	
-		PastData p;
+		PastData programList;
 		System.out.print("Enter the year: ");
 		do{
 			input = Method.sc.nextLine();

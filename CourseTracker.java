@@ -67,23 +67,44 @@ public class CourseTracker {
 	* checkAverageTopSix
 	* Takes in an array of 6 course codes and calculates the average mark.
 	*/
-	public double checkAverageTopSix (String[] topSixCourseList) {
+	public double checkAverageTopSix (Course[] topSixCourseList) {
 		final int NUM_COURSES = 6;
 		double markSum = 0;
 		int count = 0;
 
-		for (int i = 0; i < topSixCourseList.length; i++) {
-			for (ActiveCourse course : courseList) {
-				if (topSixCourseList[i].equals(course.getCourseCode())) {
-					markSum += course.getMark();
-					count++;
-				}
-			}
+		for (Course course : topSixCourseList) {
+			markSum += course.getMark();
+			count++;
 		}
+
 		if (count == NUM_COURSES) {
 			return markSum / NUM_COURSES;
 		}
 		return -1;
+	}
+
+	public double checkAverageTopSixRecursion(Course[] topSixCourseList){
+		if(topSixCourseList.length == 1){
+			double mark = topSixCourseList[0].getMark();
+			return mark;
+		}
+		else if(topSixCourseList.length == 6){
+			Course[] temp = new Course[topSixCourseList.length-1]; 
+			for(int i=0; i<topSixCourseList.length-1; i++){
+				temp[i] = topSixCourseList[i+1];
+			}
+			double mark = topSixCourseList[0].getMark();
+			double total = mark + checkAverageTopSixRecursion(temp);
+			return total/6;
+		}
+		else{
+			Course[] temp = new Course[topSixCourseList.length-1]; 
+			for(int i=0; i<topSixCourseList.length-1; i++){
+				temp[i] = topSixCourseList[i+1];
+			}
+			double mark = topSixCourseList[0].getMark();
+			return mark + checkAverageTopSixRecursion(temp);	
+		}
 	}
 
 	public boolean dropCourse (String courseCode) {

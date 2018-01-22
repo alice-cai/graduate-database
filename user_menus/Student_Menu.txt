@@ -1,4 +1,4 @@
-9
+10
 
 1. Q&A Menu
 2. Program List
@@ -6,6 +6,7 @@
 4. Add Course
 5. Delete Course
 6. Update Course
-7. Change Username
-8. Change Password
-9. Log Out
+7. Check Top Six Average
+8. Change Username
+9. Change Password
+10. Log Out
