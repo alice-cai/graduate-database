@@ -128,13 +128,13 @@ public class Admin extends User{
 					QNAAdmin.displayMenu();
 					break;
 				case 2:
-					//search programs
+               UserDatabase.programDatabase.displayMenu();
 					break;
 				case 3:
-					// add program
+               UserDatabase.programDatabase.addProgram();
 					break;
 				case 4: 
-					//delete program
+               UserDatabase.programDatabase.deleteProgram();
 					break;
 				case 5:
 					displayStudentList();

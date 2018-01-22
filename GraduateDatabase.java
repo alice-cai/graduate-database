@@ -149,7 +149,10 @@ public class GraduateDatabase {
 				count++;
 			}
 		}
-		return sum / count;
+      if (count == 0)
+         return -1;
+      else
+		   return sum / count;
 	}
 
 	/**
@@ -166,7 +169,10 @@ public class GraduateDatabase {
 				count++;
 			}
 		}
-		return sum / count;
+      if (count == 0)
+         return -1;
+      else
+		   return sum / count;
 	}
 
 	/**
@@ -216,7 +222,7 @@ public class GraduateDatabase {
 	* MAX_YEARS_FROM_GRAD years.
 	*/
 	public double findLowestAverage (int programID) {
-		double lowestAverage = -1;
+		double lowestAverage=Double.MAX_VALUE;
 		for (Graduate graduate : graduateList) {
 			if (graduate.getProgramID() == programID && graduate.getTopSixAverage() < lowestAverage) {
 				lowestAverage = graduate.getTopSixAverage();
@@ -232,7 +238,7 @@ public class GraduateDatabase {
 	* in the specified year.
 	*/
 	public double findLowestAverage (int programID, int year) {
-		double lowestAverage = -1;
+		double lowestAverage = Double.MAX_VALUE;
 		for (Graduate graduate : graduateList) {
 			if (graduate.getProgramID() == programID && graduate.getYearGraduated() == year && graduate.getTopSixAverage() < lowestAverage) {
 				lowestAverage = graduate.getTopSixAverage();

@@ -13,7 +13,7 @@ public class UserDatabase {
 
 	private ArrayList<Admin> adminTracker;
 	private ArrayList<Student> studentTracker;
-	private ProgramDatabase programDatabase;
+	public static ProgramDatabase programDatabase; // How can this not be public??
 	private GraduateDatabase graduateDatabase;
 
 	public UserDatabase (GraduateDatabase graduateDatabase) {
@@ -24,6 +24,8 @@ public class UserDatabase {
 		loadAdminList();
 		loadStudentList();
 	}
+
+   
 
 	public void loadAdminList () {
 		try {
@@ -46,7 +48,7 @@ public class UserDatabase {
 			System.out.println("Error converting from string to integer (while loading admin list).");
 		}
 	}
-
+   
 	public void loadStudentList(){
 		try {
 			BufferedReader in = new BufferedReader(new FileReader(STUDENTFILE));

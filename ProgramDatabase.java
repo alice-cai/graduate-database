@@ -143,11 +143,11 @@ public class ProgramDatabase
                switch(Method.getOption(order.size()))
                {
                   case 1:
-                     Collections.sort(p);
+                     Collections.reverse(p);
 							Method.outputPrograms(p);
 							break;
                   case 2:
-							Collections.reverse(p);
+							Collections.sort(p);
 							Method.outputPrograms(p);
 							break;
                }

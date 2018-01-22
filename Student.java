@@ -151,7 +151,7 @@ public class Student extends User {
 					QNAStudent.displayMenu();
 				 	break;
 				case 2:
-					//call program list method
+               UserDatabase.programDatabase.displayMenu();
 					break;
 				case 3:
 					viewCourses();
