@@ -204,10 +204,10 @@ public class GraduateDatabase {
 			}
 		}
 
-		Double[] graduateMarksArray = (Double[])(graduateMarks.toArray());
+		Object[] graduateMarksArray = (graduateMarks.toArray());
 		Arrays.sort(graduateMarksArray);
 
-		return graduateMarksArray[graduateMarksArray.length/2];
+		return (double)graduateMarksArray[graduateMarksArray.length/2];
 	}
 
 	/**
