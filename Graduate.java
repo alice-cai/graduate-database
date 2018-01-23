@@ -69,7 +69,7 @@ public class Graduate {
 			Course course = topSixCourses[i];
 			output += String.format("%n%s (%.1f)", course.getCourseCode(), course.getMark());
 		}
-		output += "\nAverage: " + Math.round(topSixAverage);
+		output += "\nAverage: " + Math.round(topSixAverage) + "%";
 		output += "\nAccepted to: " + university;
 		output += "\nYear Graduated: " + yearGraduated;
 

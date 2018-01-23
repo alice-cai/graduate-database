@@ -46,7 +46,7 @@ public class ProgramOverview
 	{
 		String input;
 		System.out.println(this);
-		System.out.print("Press any key to return to previous menu.");
+		System.out.println("Press any key to return to previous menu.");
 		input = sc.nextLine(); 
 	}
 	
@@ -87,10 +87,10 @@ public class ProgramOverview
 	
 	public String toString ()
 	{
-		String s = ("Program name: " + name + "\nUniversity: " + university + "\nOUAC code : "+ ouacCode + "\nMajor: " + major + "\nCoop option: ");
+		String s = ("Program name: " + name + "\nUniversity: " + university + "\nOUAC code: "+ ouacCode + "\nMajor: " + major + "\nCoop option: ");
 		s+= (coop?"Yes":"No");
 		s+= "\nEnrollment: " + ((enrollment>0)?enrollment:"Unknown") + "\n";
-		s+= "Admission average: " + (admissionAverage>0? admissionAverage : "unknown") + "\n";
+		s+= "Admission average: " + (admissionAverage>0? admissionAverage : "unknown") + "%\n";
 		return s;
 	}
    

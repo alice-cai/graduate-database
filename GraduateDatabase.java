@@ -14,7 +14,7 @@ public class GraduateDatabase {
 	public static final String[] PROGRAMS = { "University of Waterloo (Software Engineering)", "University of Toronto (Rotman Commerce)",
 	"University of Toronto (Engineering Science)", "McMaster University (Life Science)", "Trent University (Anthropology)", "University of Guelph (Agriculture)",
 	"Western University (Science)", "Queen's University (Commerce)", "York University (Mathematics)", "Ryerson University (Arts and Contemporary Studies)"};
-	private final String GRADUATE_FILE = "user_data/graduate_list.txt";
+	private static final String GRADUATE_FILE = "user_data/graduate_list.txt";
 	public static final int NUM_COURSES = 6;
 	public static final int MAX_YEARS_FROM_GRAD = 5;
 	private ArrayList<Graduate> graduateList;
@@ -34,7 +34,6 @@ public class GraduateDatabase {
 	}
 
 	/**
-	* createByFileInput
 	* Loads all Graduate data from GRADUATE_FILE.
 	*/
 	private void createByFileInput () {
@@ -67,7 +66,6 @@ public class GraduateDatabase {
 	}
 
 	/**
-	* saveToFile
 	* Saves all Graduate data to GRADUATE_FILE.
 	*/
 	public void saveToFile () {
@@ -116,7 +114,6 @@ public class GraduateDatabase {
 	}
 
 	/**
-	* removeOldGraduates
 	* Removes all graduates that graduated over MAX_YEARS_FROM_GRAD ago.
 	*/
 	private void removeOldGraduates () {
@@ -136,8 +133,7 @@ public class GraduateDatabase {
 	}
 
 	/**
-	* calculateMean
-	* Takes in a programID. Returns the average admission average for the
+	* Takes in a programID. Returns the mean admission average for the
 	* specified program.
 	*/
 	public double calculateMean (int programID) {
@@ -156,8 +152,7 @@ public class GraduateDatabase {
 	}
 
 	/**
-	* calculateMean
-	* Takes in a programID and a year. Returns the average admission average
+	* Takes in a programID and a year. Returns the mean admission average
 	* for the specified program in the specified year.
 	*/
 	public double calculateMean (int programID, int year) {
@@ -176,7 +171,6 @@ public class GraduateDatabase {
 	}
 
 	/**
-	* calculateMedian
 	* Takes in a programID. Returns the median admission average for the
 	* specified program in the specified year.
 	*/
@@ -196,7 +190,6 @@ public class GraduateDatabase {
 	}
 
 	/**
-	* calculateMedian
 	* Takes in a programID and a year. Returns the median admission average
 	* for the specified program in the specified year.
 	*/
@@ -216,7 +209,6 @@ public class GraduateDatabase {
 	}
 
 	/**
-	* findLowestAverage
 	* Takes in a programID. Returns the average of the student with the lowest
 	* grades that was admitted into the specified program over the past
 	* MAX_YEARS_FROM_GRAD years.
@@ -232,7 +224,6 @@ public class GraduateDatabase {
 	}
 
 	/**
-	* findLowestAverage
 	* Takes in a programID and a year. Returns the average of the student
 	* with the lowest grades that was admitted into the specified program
 	* in the specified year.
@@ -248,7 +239,6 @@ public class GraduateDatabase {
 	}
 
 	/**
-	* findGradList
 	* Takes in a programID and returns an ArrayList of all Graduates who were
 	* admitted to that program in the past MAX_YEARS_FROM_GRAD years.
 	*/
@@ -265,7 +255,6 @@ public class GraduateDatabase {
 	}
 
 	/**
-	* findGradList
 	* Takes in a programID and a year. Returns an ArrayList of all Graduates who were
 	* admitted to the specified program in the specified year.
 	*/

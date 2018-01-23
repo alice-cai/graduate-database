@@ -59,7 +59,7 @@ public class ContactInfo
 	
 	public String toString ()
 	{
-		return("Phone: " + phone + "\nEmail: " + email + "\naddress: "+ address + "\nperson: " + person + "\n");
+		return("Phone: " + phone + "\nEmail: " + email + "\naddress: "+ address + "\nPerson: " + person + "\n");
 	}
    
 	public void save (String file)

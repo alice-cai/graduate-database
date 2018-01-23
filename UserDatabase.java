@@ -1,44 +1,40 @@
 /**
 * UserDatabase.java
-* Responsible for managing all users.
+* Responsible for loading, saving, and managing all users in the Information
+* System.
 */
 
 import java.util.*;
 import java.io.*;
 
 public class UserDatabase {
-	private static final String ADMINFILE = "user_data/admin_list.txt";
-	private static final String STUDENTFILE = "user_data/student_list.txt"; 
+	private static final String ADMIN_FILE = "user_data/admin_list.txt";
+	private static final String STUDENT_FILE = "user_data/student_list.txt"; 
 	public static final Guest GUEST = new Guest();
 
-	private ArrayList<Admin> adminTracker;
-	private ArrayList<Student> studentTracker;
-	public static ProgramDatabase programDatabase; // How can this not be public??
-	private GraduateDatabase graduateDatabase;
+	private ArrayList<Admin> adminList;
+	private ArrayList<Student> studentList;
 
-	public UserDatabase (GraduateDatabase graduateDatabase) {
-		adminTracker = new ArrayList<Admin>();
-		studentTracker = new ArrayList<Student>();
-		this.graduateDatabase = graduateDatabase;
-		programDatabase = new ProgramDatabase();
+	public UserDatabase () {
+		adminList = new ArrayList<>();
+		studentList = new ArrayList<>();
 		loadAdminList();
 		loadStudentList();
 	}
 
-   
-
+	/**
+	* Reads the list of admins from the ADMIN_FILE and stores it in the adminList.
+	*/
 	public void loadAdminList () {
 		try {
-			BufferedReader in = new BufferedReader(new FileReader(ADMINFILE));
+			BufferedReader in = new BufferedReader(new FileReader(ADMIN_FILE));
 
 			int numAdmins = Integer.parseInt(in.readLine());
-
 			for(int i = 0; i < numAdmins; i++){
 				in.readLine();
-				Admin admin = new Admin(in.readLine(), in.readLine(), in.readLine(), studentTracker, graduateDatabase, programDatabase);
-				adminTracker.add(admin);
+				Admin admin = new Admin(in.readLine(), in.readLine(), in.readLine(), studentList);
+				adminList.add(admin);
 			}
-
 			in.close();
 		}
 		catch(IOException iox){
@@ -48,10 +44,13 @@ public class UserDatabase {
 			System.out.println("Error converting from string to integer (while loading admin list).");
 		}
 	}
-   
-	public void loadStudentList(){
+
+	/**
+	* Reads the list of students from the STUDENT_FILE and stores it in the studentList.
+	*/
+	public void loadStudentList () {
 		try {
-			BufferedReader in = new BufferedReader(new FileReader(STUDENTFILE));
+			BufferedReader in = new BufferedReader(new FileReader(STUDENT_FILE));
 
 			int num = Integer.parseInt(in.readLine());
 
@@ -71,10 +70,9 @@ public class UserDatabase {
 					courseList.add(active);
 				}
 				CourseTracker courseTracker = new CourseTracker(courseList);
-				boolean acceptedToUni = Boolean.parseBoolean(in.readLine());
 
-				Student stu = new Student(username, password, firstName, lastName, oen, courseTracker, acceptedToUni);
-				studentTracker.add(stu);
+				Student stu = new Student(username, password, firstName, lastName, oen, courseTracker);
+				studentList.add(stu);
 			}
 
 			in.close();
@@ -88,15 +86,17 @@ public class UserDatabase {
 
 	}
 
-	//save admin list to file
-	public void saveAdminList(){
+	/**
+	* Saves all the information about the Admin objects in adminList to ADMIN_FILE.
+	*/
+	public void saveAdminList () {
 		try {
-			BufferedWriter out = new BufferedWriter (new FileWriter(ADMINFILE));
+			BufferedWriter out = new BufferedWriter (new FileWriter(ADMIN_FILE));
 
-			out.write(adminTracker.size() + "");
+			out.write(adminList.size() + "");
 			out.newLine();
 
-			for (Admin admin : adminTracker) {
+			for (Admin admin : adminList) {
 				out.newLine();
 
 				out.write(admin.getUsername());
@@ -113,15 +113,17 @@ public class UserDatabase {
 		}
 	}
 
-	//save student list to file
+	/**
+	* Saves all the information about the Student objects in studentList to STUDENT_FILE.
+	*/
 	public void saveStudentList(){
 		try{
-			BufferedWriter out = new BufferedWriter(new FileWriter(STUDENTFILE));
+			BufferedWriter out = new BufferedWriter(new FileWriter(STUDENT_FILE));
 
-			out.write(studentTracker.size() + "");
+			out.write(studentList.size() + "");
 			out.newLine();
 
-			for(Student stu : studentTracker) {
+			for(Student stu : studentList) {
 				out.newLine();
 
 				out.write(stu.getUsername());
@@ -144,10 +146,6 @@ public class UserDatabase {
 					out.write(course.getMark() + "");
 					out.newLine();
 				}
-
-				out.write(stu.getAcceptedToUni() + "");
-				out.newLine();
-
 			}
 			out.close();
 		}
@@ -156,14 +154,20 @@ public class UserDatabase {
 		}
 	}
 
+	/**
+	* Takes in a Student object and adds it to the studentList.
+	*/
 	public void addStudent (Student student) {
-		studentTracker.add(student);
+		studentList.add(student);
 		saveStudentList();
 	}
 
-	//checks if a the student parameter is unique in the list. Checks username password OEN and student number
+	/**
+	* Takes in a username and checks if a Student already has that username. If so,
+	* return false. Otherwise, return true.
+	*/
 	public boolean studentUsernameAvailable (String username) {
-		for (Student curStudent : studentTracker) {
+		for (Student curStudent : studentList) {
 			if (username.equals(curStudent.getUsername())) {
 				return false;
 			}
@@ -171,26 +175,25 @@ public class UserDatabase {
 		return true;
 	}
 
-	public boolean deleteStudent (String OEN) {
-		Student student = searchStudentByOEN(OEN);
-		if (student != null) {
-			studentTracker.remove(student);
-			return true;
-		}
-		return false;
-	}
-
+	/**
+	* Takes in an OEN and returns the Student to which it belongs.
+	*/
 	public Student searchStudentByOEN (String OEN) {
-		for(Student student: studentTracker){
+		for(Student student: studentList){
 			if(student.getOEN().equals(OEN)){
 				return student;
 			}
 		}
-		return null;	
+		return null;
 	}
 
+	/**
+	* Takes in Student login information and returns the Student with the matching
+	* username and password. If the login information does not match that of any
+	* existing Student, this method returns null.
+	*/
 	public Student searchStudentByLoginInfo (String user, String password) {
-		for(Student student: studentTracker){
+		for(Student student: studentList){
 			if(student.getUsername().equalsIgnoreCase(user) && student.getPassword().equals(password)){
 				return student;
 			}
@@ -198,8 +201,13 @@ public class UserDatabase {
 		return null;
 	}
 
+	/**
+	* Takes in Admin login information and returns the Admin with the matching
+	* username and password. If the login information does not match that of any
+	* existing Admin, this method returns null.
+	*/
 	public Admin searchAdminByLoginInfo (String user, String password) {
-		for(Admin admin: adminTracker){
+		for(Admin admin: adminList){
 			if(admin.getUsername().equalsIgnoreCase(user) && admin.getPassword().equals(password)){
 				return admin;
 			}

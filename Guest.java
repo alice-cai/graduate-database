@@ -1,17 +1,22 @@
+/**
+* Guest.java
+* This class represents a Guest user. It is responsible for loading and displaying
+* menu options for Guest.
+*/
+
 import java.util.*;
 import java.io.*;
 
-//Guest user class. Extends User
-public class Guest extends User{
+public class Guest extends User {
 	private final String MENU = "user_menus/Guest_Menu.txt";
 	private int numMenuOptions;
 	private String[] menuOptions;
 
 	public Guest () {
-		loadMenu();
+		loadMainMenu();
 	}
 
-	public void loadMenu () {
+	public void loadMainMenu () {
 		try {
 			BufferedReader in = new BufferedReader(new FileReader(MENU));
 			numMenuOptions = Integer.parseInt(in.readLine());
@@ -28,17 +33,23 @@ public class Guest extends User{
 		}
 	}
 
+	/**
+	* Displays the menu options for a Guest user and prompts the user to choose
+	* one of the menu options. It calls different methods based on which option
+	* is chosen.
+	*/
 	public void displayMainMenu(){
 		Scanner sc = new Scanner(System.in);
 		int choice = 0;
-		boolean keepOnGoing = true;
 
-		while(keepOnGoing){
+		while (true) {
+			// displays main menu of options
 			System.out.println("\nGuest Menu");
 			for (int i = 0; i < numMenuOptions; i++) {
 				System.out.println(menuOptions[i]);
 			}
 
+			// prompts user for input until they enter a valid choice number
 			while (!(choice > 0 && choice <= numMenuOptions)) {
 				try {
 					System.out.print("Enter an option: ");
@@ -50,18 +61,17 @@ public class Guest extends User{
 				}
 			}
 
-			//executes the choice number				
+			// calls method corresponding to the option chosen by user
 			switch (choice){
 				case 1:
 					QNAGuest.initQNA();
 					QNAGuest.displayMenu();
 					break;
 				case 2:
-					ProgramDatabase.displayMenu();
+					InformationSystem.getProgramDatabase().displayMenu();
 					break;
 				case 3:
-					keepOnGoing = false;
-					break;
+					return;
 			}
 			choice = 0;
 		}

@@ -1,23 +1,22 @@
-//User abstract class
-public abstract class User {
+/**
+* User.java
+* This abstract class represents a skeleton for a User object.
+*/
 
-	//Fields of the User class.
+public abstract class User {
 	protected String username;
 	protected String password;
 	
-	//Constructors: 1 default 1 that takes in two strings
 	public User () {
-		username = " ";
-		password = " ";
+		username = "";
+		password = "";
 	}
 	
-	public User (String u, String p) {
-		username = u;
-		password = p;
+	public User (String username, String password) {
+		this.username = username;
+		this.password = password;
 	}
 	
-	//methods
-	//accessors mutators
 	public String getUsername () {
 		return username;
 	}
@@ -25,28 +24,8 @@ public abstract class User {
 	public String getPassword () {
 		return password;
 	}
-	
-	//change username. First parameter is check password, second parameter is 
-	// the updated username
-	public boolean changeUsername (String p, String n) {
-		if(password == p){
-			username = n;
-			return true;
-		}
-		
-		return false;
-	}
-	
-	//change password. First parameter is check password, second parameter is 
-	// the updated password
-	public boolean changePassword (String p, String n) {
-		if(password == p){
-			password = n;
-			return true;
-		}
-		
-		return false;
-	}
+
+	public abstract void loadMainMenu();
 	
 	public abstract void displayMainMenu();
 	

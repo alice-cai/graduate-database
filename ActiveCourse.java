@@ -1,6 +1,7 @@
 /**
 * ActiveCourse.java
-* Stores information about a course in which a student is currently enrolled.
+* Stores information about a course in which a student is currently enrolled. Allows
+* modification of the student's mark.
 */
 
 public class ActiveCourse extends Course {

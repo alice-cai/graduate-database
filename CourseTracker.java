@@ -23,6 +23,13 @@ public class CourseTracker {
 		return courseList.size();
 	}
 
+	/**
+	* Checks if the inputted course code is an available course at AY Jackson. All available
+	* course codes are stored in the AVAILABLE_COURSES array.
+	*
+	* @param courseCode - the course code that is being checked
+	* @return boolean indicating whether the specified course code belongs to an AYJ course
+	*/
 	public static boolean isValidCourse (String courseCode) {
 		courseCode = courseCode.toUpperCase();
 		for (String availableCourse : AVAILABLE_COURSES) {
@@ -33,12 +40,55 @@ public class CourseTracker {
 		return false;
 	}
 
-	public void addCourse (ActiveCourse course) {
+	/**
+	* Checks if the student is already taking the maximum number of courses or if the student
+	* is already taking the specified course. If not, this method adds the specified course to
+	* the student's list of courses.
+	*
+	* @param course - course that is to be added
+	* @return boolean indicating whether the course has been added
+	*/
+	public boolean addCourse (ActiveCourse course) {
 		if (courseList.size() < MAX_COURSES && findByCourseCode(course.getCourseCode()) == null) {
 			courseList.add(course);
+			return true;
 		}
+		return false;
 	}
 
+	/**
+	* Takes in a course code. If the student is currently taking the course
+	* specified by the course code, it removes it from the student's course
+	* list.
+	*
+	* @param courseCode - course code of the course that is to be dropped
+	* @return boolean indicating whether the course was dropped
+	*/
+	public boolean dropCourse (String courseCode) {
+		ActiveCourse course = findByCourseCode(courseCode);
+		if (course != null) {
+			courseList.remove(course);
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	* Takes in an ActiveCourse object and removes it from the student's list
+	* of courses.
+	*
+	* @param courseCode - course code of the course that is to be dropped
+	* @return boolean indicating whether the course was dropped
+	*/
+	public boolean dropCourse (ActiveCourse course) {
+		return courseList.remove(course);
+	}
+
+	/**
+	* Checks if the student is already taking the maximum number of courses or if the student
+	* is already taking the specified course. If not, this method adds the specified course to
+	* the student's list of courses.
+	*/
 	public boolean updateMark (String courseCode, double newMark) {
 		ActiveCourse course = findByCourseCode(courseCode);
 		if (course != null && course.updateMark(newMark)) {
@@ -47,13 +97,22 @@ public class CourseTracker {
 		return false;
 	}
 
-	public boolean courseExists (String courseCode) {
+	/**
+	* Checks if the student is already taking the specified course. If so, this method returns
+	* true. Otherwise, it returns false.
+	*/
+	public boolean courseFound (String courseCode) {
 		if (findByCourseCode(courseCode) != null) {
 			return true;
 		}
 		return false;
 	}
 
+	/**
+	* findByCourseCode(String courseCode)
+	* Looks through the student's courses and return the course with specified course code, or
+	* null if the student is not taking that course.
+	*/
 	private ActiveCourse findByCourseCode (String courseCode) {
 		for (ActiveCourse course : courseList) {
 			if (course.getCourseCode().equalsIgnoreCase(courseCode)) {
@@ -64,8 +123,10 @@ public class CourseTracker {
 	}
 
 	/**
-	* checkAverageTopSix
-	* Takes in an array of 6 course codes and calculates the average mark.
+	* Takes in an array of six Course objects and calculates the average mark.
+	*
+	* @param topSixCourseList - array of top six courses
+	* @return average mark
 	*/
 	public double checkAverageTopSix (Course[] topSixCourseList) {
 		final int NUM_COURSES = 6;
@@ -83,6 +144,13 @@ public class CourseTracker {
 		return -1;
 	}
 
+	/**
+	* Takes in an array of six Course objects and calculates the average mark
+	* using recursion.
+	*
+	* @param topSixCourseList - array of top six courses
+	* @return average mark
+	*/
 	public double checkAverageTopSixRecursion(Course[] topSixCourseList){
 		if(topSixCourseList.length == 1){
 			double mark = topSixCourseList[0].getMark();
@@ -105,18 +173,5 @@ public class CourseTracker {
 			double mark = topSixCourseList[0].getMark();
 			return mark + checkAverageTopSixRecursion(temp);	
 		}
-	}
-
-	public boolean dropCourse (String courseCode) {
-		ActiveCourse course = findByCourseCode(courseCode);
-		if (course != null) {
-			courseList.remove(course);
-			return true;
-		}
-		return false;
-	}
-
-	public void dropCourse (ActiveCourse course) {
-		courseList.remove(course);
 	}
 }

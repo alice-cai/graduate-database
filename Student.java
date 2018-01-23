@@ -1,43 +1,52 @@
+/**
+* Student.java
+* This class represents a single Student user. It stores the student's username,
+* password, name, OEN, and courses.
+*/
+
 import java.util.*;
 import java.io.*;
 
 public class Student extends User {
-	private Scanner sc = new Scanner(System.in);
-
 	private static final String MENU = "user_menus/Student_Menu.txt";
+	private static final String EXIT = "-1";
+	public static final int MIN_USERNAME_LENGTH = 4;
+	public static final int MIN_PASSWORD_LENGTH = 6;
 	public static final int OEN_LENGTH = 9;
 	public static final int PASSING_MARK = 50;
+
 	private String firstName;
 	private String lastName;
 	private String oen;
 	private CourseTracker courseTracker;
-	private boolean acceptedToUni;
+
 	private int numMenuOptions;
 	private String[] menuOptions;
+	private Scanner sc;
 
-	public Student(String username, String password, String firstName, String lastName, String oen, CourseTracker courseTracker, boolean accepted){
+	public Student (String username, String password, String firstName, String lastName, String oen, CourseTracker courseTracker) {
 		super(username, password);
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.oen = oen;
 		this.courseTracker = courseTracker;
-		acceptedToUni = accepted;
-		loadMenu();
+		sc = new Scanner(System.in);
+		loadMainMenu();
 	}
 
-	public String getFirstName(){
+	public String getFirstName () {
 		return firstName;
 	}
 
-	public String getLastName(){
+	public String getLastName () {
 		return lastName;
 	}
 
-	public String getOEN(){
+	public String getOEN () {
 		return oen;
 	}
 
-	public CourseTracker getCourseTracker(){
+	public CourseTracker getCourseTracker () {
 		return courseTracker;
 	}
 
@@ -57,48 +66,39 @@ public class Student extends User {
 		return numPassingCourses;
 	}
 
-	public boolean getAcceptedToUni(){
-		return acceptedToUni;
+	public void setFirstName (String firstName) {
+		this.firstName = firstName;
 	}
 
-	//mutators
-	public void setFirstName(String s){
-		firstName = s;
+	public void setLastName (String lastName) {
+		this.lastName = lastName;
 	}
 
-	public void setLastName(String s){
-		lastName = s;
+	public void setOEN (String oen) {
+		this.oen = oen;
 	}
 
-	public void setOEN(String s){
-		oen = s;
-	}
-
-	public void setCourseTracker(CourseTracker c){
-		courseTracker = c;
-	}
-
-	public void setAcceptedToUni(boolean b){
-		acceptedToUni = b;
-	}
-
-	public boolean setPassword (String oldPass, String newPass) {
-		if (oldPass.equals(password)) {
+	public boolean setPassword (String curPass, String newPass) {
+		if (curPass.equals(password)) {
 			password = newPass;
 			return true;
 		}
 		return false;
 	}
 
-	public boolean setUsername (String oldPass, String newUsername) {
-		if (oldPass.equals(password)) {
+	public boolean setUsername (String curPass, String newUsername) {
+		if (curPass.equals(password)) {
 			username = newUsername;
 			return true;
 		}
 		return false;
 	}
 
-	public void loadMenu () {
+	/**
+	* Reads in the main menu options from the MENU text file and stores them in
+	* the menuOptions array.
+	*/
+	public void loadMainMenu () {
 		try {
 			BufferedReader in = new BufferedReader(new FileReader(MENU));
 			numMenuOptions = Integer.parseInt(in.readLine());
@@ -116,19 +116,22 @@ public class Student extends User {
 		}
 	}
 
-	//displays the menu for admin users
-	public void displayMainMenu() {
+	/**
+	* Displays the Student main menu, prompts the user to choose a menu option, and
+	* calls the method corresponding to the user's choice.
+	*/
+	public void displayMainMenu () {
 		Scanner sc = new Scanner(System.in);
 		int choice = 0;
-		boolean keepOnGoing = true;
 
-		while (keepOnGoing) {
-
+		while (true) {
+			// display menu options
 			System.out.println("\n--- Student Menu (Logged In As " + username + ") ---");
 			for (int i = 0; i < numMenuOptions; i++) {
 				System.out.println(menuOptions[i]);
 			}
 
+			// prompts user to enter an option until they enter a valid option
 			while (!(choice > 0 && choice <= numMenuOptions)) {
 				try {
 						System.out.print("Enter an option: ");
@@ -140,14 +143,14 @@ public class Student extends User {
 				}
 			}
 
-			//executes the choice number
+			// calls the method that corresponds to the option selected by the user
 			switch (choice){
 				case 1:
 				   	QNAStudent.initQNA();
 					QNAStudent.displayMenu();
 				 	break;
 				case 2:
-					ProgramDatabase.displayMenu();
+					InformationSystem.getProgramDatabase().displayMenu();
 					break;
 				case 3:
 					viewCourses();
@@ -171,13 +174,15 @@ public class Student extends User {
 					changePassword();
 					break;
 				case 10:
-					keepOnGoing = false;
-					break;
+					return;
 			}
 			choice = 0;
 		}
 	}
 
+	/**
+	* Displays a numbered list of this Student's courses.
+	*/
 	public void displayCourseList () {
 		ArrayList<ActiveCourse> courseList = courseTracker.getCourseList();
 
@@ -188,12 +193,21 @@ public class Student extends User {
 		}
 	}
 
+	/**
+	* Calls the displayCourseList() method. Prompts the user to enter any key when
+	* they are done viewing the list.
+	*/
 	public void viewCourses () {
 		displayCourseList();
 		System.out.println("Enter anything to return to the previous menu: ");
 		sc.nextLine();
 	}
 
+	/**
+	* Checks if this Student is already taking the maximum number of courses. If so, this
+	* method outputs an error message and takes the student back to the main menu. If not,
+	* this method prompts the student for information about the course they are adding.
+	*/
 	public void addCourse () {
 		final String EXIT = "-1";
 		String courseCode;
@@ -217,7 +231,7 @@ public class Student extends User {
 					return;
 				}
 			}
-			while (courseTracker.courseExists(courseCode)) {
+			while (courseTracker.courseFound(courseCode)) {
 				System.out.println("Already taking this course!");
 				System.out.print("Enter a new course (enter " + EXIT + " to cancel): ");
 				courseCode = sc.nextLine();
@@ -246,6 +260,11 @@ public class Student extends User {
 		}
 	}
 
+	/**
+	* Displays the list of courses taken by this Student and prompts the student to select
+	* the course that they would like to delete. Once the user has selected a course, this
+	* method removes it from the CourseTracker and outputs a confirmation message.
+	*/
 	public void deleteCourse () {
 		final int EXIT = -1;
 		int choice = 0;
@@ -274,7 +293,12 @@ public class Student extends User {
 		System.out.println("Course successfully droppped.");
 	}
 
-	//student update mark
+	/**
+	* Displays the list of courses taken by this Student and prompts the user to select
+	* the course that they would like to update. Once the user has selected a course,
+	* this method prompts the user for the new course mark. It then replaces the old
+	* mark with the new one and outputs a confirmation message.
+	*/
 	public void updateCourseMark () {
 		final int EXIT = -1;
 		int choice = 0;
@@ -321,6 +345,11 @@ public class Student extends User {
 		System.out.println("Mark updated successfully!");
 	}
 
+	/**
+	* Displays the list of courses taken by this Student and prompts the user to select
+	* the six courses that they would like to use for their top six. It then outputs the
+	* Student's top six average using the selected courses.
+	*/
 	public void getTopSixAverage () {
 		displayCourseList();
 
@@ -365,6 +394,10 @@ public class Student extends User {
 		sc.nextLine();
 	}
 
+	/**
+	* Allows the user to change their password, provided that they successfully verify
+	* their identity by entering their current password.
+	*/
 	public void changePassword () {
 		final String EXIT = "-1";
 		String password, newPassword, confirmNewPassword;
@@ -400,6 +433,10 @@ public class Student extends User {
 		System.out.println("Password changed successfully.");
 	}
 
+	/**
+	* Allows the user to change their username, provided that they successfully verify
+	* their identity by entering their current password.
+	*/
 	public void changeUsername () {
 		final String EXIT = "-1";
 		String password, newUsername, confirmNewUsername;

@@ -1,6 +1,7 @@
 /**
 * Course.java
-* Stores information about a completed course.
+* Stores information about a completed course. Does not allow modification
+* of the course mark or course code .
 */
 
 public class Course {

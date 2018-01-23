@@ -7,14 +7,14 @@ public class Method {
 	public static Scanner sc = new Scanner(System.in);
    public static final String ERROR = "List not found, press 1 to return to previous menu...";
     
-   public static boolean inputCheck (String s, int option)
+	public static boolean inputCheck (String s, int option)
 	{
 		try
 		{
-			if (Integer.parseInt(s) >= 1 && Integer.parseInt(s) <= option)
-				return true;
-			else
-				return false;
+		if (Integer.parseInt(s) >= 1 && Integer.parseInt(s) <= option)
+			return true;
+		else
+			return false;
 		}
 		catch(NumberFormatException nfe)
 		{
@@ -22,14 +22,14 @@ public class Method {
 		}
 	}
    
-   public static boolean inputCheck (String s)
+	public static boolean inputCheck (String s)
 	{
 		try
 		{
 			if( Integer.parseInt(s)<0)
-			   return false;
-         else
-            return true;
+				return false;
+		else
+			return true;
 		}
 		catch(NumberFormatException nfe)
 		{
@@ -37,7 +37,7 @@ public class Method {
 		}
 	}
    
-   public static boolean inputCheck (String s, double number)
+	public static boolean inputCheck (String s, double number)
 	{
 		try
 		{
@@ -52,63 +52,63 @@ public class Method {
 		}
 	}
    
-	 public static ArrayList <String> readMenu(String file)
-	 {
-	 	ArrayList<String> menu = new ArrayList<String> ();
-	 	try 
-      {
-         BufferedReader in = new BufferedReader(new FileReader(file));
+	public static ArrayList <String> readMenu(String file)
+	{
+		ArrayList<String> menu = new ArrayList<String> ();
+		try 
+		{
+			BufferedReader in = new BufferedReader(new FileReader(file));
 			String line;
 			while ((line = in.readLine())!= null)
 			{
 				menu.add(line);
 			}
 			in.close();
-      }
-      catch (IOException iox)
-      {
+		}
+		catch (IOException iox)
+		{
 			System.out.print("Cannot load files.");
-      }
+		}
 		return menu;
-	 }
+	}
 	 
-	 public static int getOption (int option)
-	 {
-	 		String choice;
-	 		System.out.print("Enter your choice:");
+	public static int getOption (int option)
+	{
+ 		String choice;
+ 		System.out.print("Enter your choice: ");
+		choice = sc.nextLine();
+		while (!inputCheck(choice, option))
+		{
+			System.out.println("The previous entry is invalid.");
+			System.out.print("Enter your choice: ");
 			choice = sc.nextLine();
-			while (!inputCheck(choice, option))
-			{
-				System.out.println("The previous entry is invalid.");
-				System.out.print("Enter your choice:");
-				choice = sc.nextLine();
-			}
-			return Integer.parseInt(choice);
-	 }
+		}
+		return Integer.parseInt(choice);
+	}
 	 
-    public static double getMark(double number)
-	 {
-	 		String choice;
-	 		System.out.print("Enter a mark:");
+   	public static double getMark(double number)
+	{
+ 		String choice;
+ 		System.out.print("\nEnter a mark: ");
+		choice = sc.nextLine();
+		while (!inputCheck(choice, number))
+		{
+			System.out.println("The previous entry is invalid.");
+			System.out.print("Enter your choice: ");
 			choice = sc.nextLine();
-			while (!inputCheck(choice, number))
-			{
-				System.out.println("The previous entry is invalid.");
-				System.out.print("Enter your choice:");
-				choice = sc.nextLine();
-			}
-			return Double.parseDouble(choice);
-	 }
+		}
+		return Double.parseDouble(choice);
+	}
     
     public static void displayProgramList(ArrayList<Program> p)
     {
-         int i = 1;
-         System.out.println(i++ +". return to previous list");
+        int i = 1;
+        System.out.println(i++ +". Return to previous menu.\n");
    		for ( ; i <= p.size()+1; i++)
          	System.out.println(i+ ". " + p.get(i-2));
     }
     
-   public static void displayPastData(ArrayList<PastData> p)
+    public static void displayPastData(ArrayList<PastData> p)
 	{
 		int size = p.size();
 		for (int i = 0; i < size; i++)
@@ -123,29 +123,30 @@ public class Method {
 		{
 			System.out.println(i + ". " + s.get(i-1));
 		}
-    }
-    
-    public static void outputPrograms(ArrayList<Program> p)
-	 {
-      if(p.isEmpty())
-      {
-         System.out.print(ERROR);
-         Method.getOption(1);
-      }
-      else
-      {
-         Method.displayProgramList(p);
-         int input = Method.getOption(p.size()+1);
-         if (input > 1)
-            p.get(input-2).displayMenu();
-      }
+	}
+
+	public static void outputPrograms(ArrayList<Program> p)
+	{
+	 	System.out.println("\n---- Programs ----");
+		if(p.isEmpty())
+		{
+			System.out.println(ERROR);
+			Method.getOption(1);
+		}
+		else
+		{
+			Method.displayProgramList(p);
+			int input = Method.getOption(p.size()+1);
+			if (input > 1)
+				p.get(input-2).displayMenu();
+		}
 	}
    
    public static boolean trueOrFalse(String s)
    {
-      if (s.toLowerCase().equals("yes"))
-         return true;
-      else
-         return false;
+		if (s.toLowerCase().equals("yes"))
+			return true;
+		else
+			return false;
    }
 }

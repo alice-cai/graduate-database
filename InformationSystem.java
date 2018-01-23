@@ -1,27 +1,46 @@
+/**
+* InformationSystem.java
+* This is the main class used for running the Information System program. It is
+* resposible for loading and displaying the main proram menu, loggin users in,
+* and registering new users.
+*/
+
 import java.io.*;
 import java.util.*;
 
 public class InformationSystem {
-	private static String MENU_FILE = "user_menus/Main_Menu.txt";
-	private static String EXIT = "-1";
-	private UserDatabase users;
-	private GraduateDatabase graduateDatabase;
-	private User currentUser;
+	private static final String MENU_FILE = "user_menus/Main_Menu.txt";
+	private static final String EXIT = "-1";
+
+	private static GraduateDatabase graduateDatabase = new GraduateDatabase();
+	private static ProgramDatabase programDatabase = new ProgramDatabase();
+	private UserDatabase userDatabase;
+
 	private String[] menuOptions;
 	private int numMenuOptions;
-	private Scanner sc;
+	private User currentUser;
 	private boolean endProgram;
+	private Scanner sc;
 
 	public InformationSystem () {
-		graduateDatabase = new GraduateDatabase();
-		users = new UserDatabase(graduateDatabase);
-		ProgramDatabase.initialize();
+		userDatabase = new UserDatabase();
 		sc = new Scanner(System.in);
 		endProgram = false;
 		loadMenu();
 		displayMenu();
 	}
 
+	public static GraduateDatabase getGraduateDatabase () {
+		return graduateDatabase;
+	}
+
+	public static ProgramDatabase getProgramDatabase () {
+		return programDatabase;
+	}
+
+	/**
+	* Loads the main menu options from the text file.
+	*/
 	public void loadMenu () {
 		try {
 			BufferedReader in = new BufferedReader(new FileReader(MENU_FILE));
@@ -37,6 +56,10 @@ public class InformationSystem {
 		}
 	}
 
+	/**
+	* Displays the main program menu until the user chooses to end the program. Saves
+	* the user data before terminating the program.
+	*/
 	public void displayMenu () {
 		do {
 			System.out.println("\n--- Information System ---");
@@ -45,10 +68,14 @@ public class InformationSystem {
 			}
 			processMenuChoice();
 		} while (!endProgram);
-		users.saveAdminList();
-		users.saveStudentList();
+		userDatabase.saveAdminList();
+		userDatabase.saveStudentList();
 	}
 
+	/**
+	* Repeatedly prompts the user to choose an option from the main menu until they enter
+	* a valid choice. Calls the method corresponding to the option selected by the user.
+	*/
 	public void processMenuChoice () {
 		int choice = -1;
 
@@ -89,6 +116,12 @@ public class InformationSystem {
 		choice = -1;
 	}
 
+	/**
+	* Allows the user to log in as a Student. Prompts the user to input their username and
+	* password. If their username and password match those of an existing Student, the
+	* currentUser is set as that Student object. Otherwise, an error message is displayed
+	* and the user is given the option to try logging in again or return to the previous menu.
+	*/
 	public void logInStudent () {
 		String username, password;
 
@@ -99,7 +132,7 @@ public class InformationSystem {
 		System.out.print("Password: ");
 		password = sc.nextLine();
 
-		while (users.searchStudentByLoginInfo(username, password) == null) {
+		while (userDatabase.searchStudentByLoginInfo(username, password) == null) {
 			System.out.println("Invalid username or password! Enter anything to try");
 			System.out.println("again. Enter -1 to return to the main menu.");
 			String choice = sc.nextLine();
@@ -114,10 +147,16 @@ public class InformationSystem {
 			password = sc.nextLine();
 		}
 
-		currentUser = users.searchStudentByLoginInfo(username, password);
+		currentUser = userDatabase.searchStudentByLoginInfo(username, password);
 	}
 
-
+	/**
+	* Allows the user to log in as an Admin. Prompts the user to input their username and
+	* password. If their username and password match those of an existing Admin, the
+	* currentUser is set as that Admin object. Otherwise, an error message is displayed
+	* and the user is given the option to try logging in again or return to the previous 
+	* menu.
+	*/
 	public void logInAdmin () {
 		String username, password;
 
@@ -128,7 +167,7 @@ public class InformationSystem {
 		System.out.print("Password: ");
 		password = sc.nextLine();
 
-		while (users.searchAdminByLoginInfo(username, password) == null) {
+		while (userDatabase.searchAdminByLoginInfo(username, password) == null) {
 			System.out.println("Invalid username or password! Enter anything to try");
 			System.out.println("again. Enter -1 to return to the main menu.");
 			String choice = sc.nextLine();
@@ -143,47 +182,76 @@ public class InformationSystem {
 			password = sc.nextLine();
 		}
 
-		currentUser = users.searchAdminByLoginInfo(username, password);
+		currentUser = userDatabase.searchAdminByLoginInfo(username, password);
 	}
 
+	/**
+	* Allows the user to register as a Student. Prompts the user for a username, a password,
+	* their first name, their last name, their Ontario Education Number, and all their
+	* courses. Creates a Student object for the user and adds them to the UserDatabase.
+	*/
 	public void createStudentAccount () {
-		final int MIN_USERNAME_LENGTH = 4;
-		final int MIN_PASSWORD_LENGTH = 6;
-		String username, password, firstName, lastName, oen;
+		String username, password, confirmPassword, firstName, lastName, oen;
 		int numCourses = 0;
 
 		System.out.println("\n--- Student Registration ---");
 
+		// prompts user for username (if their username is too short or is already taken
+		// an error message is displayed and the user is prompted again)
 		System.out.print("Username: ");
 		username = sc.nextLine();
-		while (username.length() < MIN_USERNAME_LENGTH) {
-			System.out.println("Username must be at least " + MIN_USERNAME_LENGTH + " characters long.");
+		while (username.length() < Student.MIN_USERNAME_LENGTH) {
+			System.out.println("Username must be at least " + Student.MIN_USERNAME_LENGTH + " characters long.");
 			System.out.print("Username: ");
 			username = sc.nextLine();
 		}
-		while (!users.studentUsernameAvailable(username)) {
+		while (!userDatabase.studentUsernameAvailable(username)) {
 			System.out.println("Username unavailable. Please enter a new one.");
 			System.out.print("Username: ");
 			username = sc.nextLine();
 		}
+
+		// prompts user for password (if their password is too short an error message is
+		// displayed and the user is prompted again)
 		System.out.print("Password: ");
 		password = sc.nextLine();
-		while (password.length() < MIN_PASSWORD_LENGTH) {
-			System.out.println("Password must be at least " + MIN_PASSWORD_LENGTH + " characters long.");
+		while (password.length() < Student.MIN_PASSWORD_LENGTH) {
+			System.out.println("Password must be at least " + Student.MIN_PASSWORD_LENGTH + " characters long.");
 			System.out.print("Password: ");
 			password = sc.nextLine();
 		}
+
+		// prompts user to confirm their password (if their password is too short an error
+		// message is displayed and the user is prompted again)
+		System.out.print("Confirm Password: ");
+		confirmPassword = sc.nextLine();
+		while (!confirmPassword.equals(password)) {
+			System.out.println("Passwords don't match.");
+			System.out.print("Confirm Password: ");
+			password = sc.nextLine();
+		}
+
+		// prompts user for their name
 		System.out.print("First Name: ");
 		firstName = sc.nextLine();
 		System.out.print("Last Name: ");
 		lastName = sc.nextLine();
+
+		// prompts user for their Ontario Education Number until they enter one that is valid
 		System.out.print("OEN: ");
 		oen = sc.nextLine();
 		while (!checkValidOEN(oen)) {
-			System.out.println("Invalid OEN number. OEN must be 9 characters long and contain only digits.");
+			System.out.println("Invalid OEN. OEN must be 9 characters long and contain only digits.");
 			System.out.print("OEN: ");
 			oen = sc.nextLine();
 		}
+		while (userDatabase.searchStudentByOEN(oen) != null) {
+			System.out.println("That OEN is taken! OENs should be unique to each student.");
+			System.out.print("OEN: ");
+			oen = sc.nextLine();
+		}
+
+		// prompts user for the number of courses that they are taking
 		do {
 			try {
 				System.out.print("How many courses are you taking? ");
@@ -200,6 +268,8 @@ public class InformationSystem {
 
 		ArrayList<ActiveCourse> courseList = new ArrayList<>();
 
+		// prompts user to enter all their course information (outputs an error message
+		// if the user enters a course that is not offered at AY Jackson)
 		for (int i = 0; i < numCourses; i++) {
 			String courseCode;
 			int mark = -1;
@@ -229,12 +299,19 @@ public class InformationSystem {
 			courseList.add(new ActiveCourse(courseCode, mark));
 		}
 
-		Student student = new Student(username, password, firstName, lastName, oen, new CourseTracker(courseList), false);
-		users.addStudent(student);
 
+		// constructs a Student object and adds it to the UserDatabase
+		Student student = new Student(username, password, firstName, lastName, oen, new CourseTracker(courseList));
+		userDatabase.addStudent(student);
+
+		// output confirmation message
 		System.out.println("Registration successful.");
 	}
 
+	/**
+	* Takes in an oen number and checks to see if it is valid. An OEN is
+	* valid if it is 9 characters long and contains only digits.
+	*/
 	public boolean checkValidOEN (String oen) {
 		int oenLength = oen.length();
 
