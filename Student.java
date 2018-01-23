@@ -351,6 +351,10 @@ public class Student extends User {
 	* Student's top six average using the selected courses.
 	*/
 	public void getTopSixAverage () {
+		if (courseTracker.getNumCourses() < GraduateDatabase.NUM_COURSES) {
+			System.out.println("Not enough courses for top six!");
+		}
+
 		displayCourseList();
 
 		ArrayList<ActiveCourse> currentCourses = courseTracker.getCourseList();

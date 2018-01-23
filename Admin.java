@@ -304,7 +304,7 @@ public class Admin extends User {
 
 				if (choice == EXIT) {
 					return;
-				} else if (!(choice > 0 && choice <= studentList.size() + 1)) {
+				} else if (!(choice > 0 && choice <= InformationSystem.getGraduateDatabase().getNumGraduates() + 1)) {
 					System.out.println("Invalid input!");
 					choice = 0;
 				}

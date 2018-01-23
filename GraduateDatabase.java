@@ -33,6 +33,10 @@ public class GraduateDatabase {
 		return graduateList;
 	}
 
+	public int getNumGraduates () {
+		return graduateList.size();
+	}
+
 	/**
 	* Loads all Graduate data from GRADUATE_FILE.
 	*/
