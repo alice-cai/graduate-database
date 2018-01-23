@@ -1,4 +1,4 @@
-20
+21
 
 becca803
 password123
@@ -415,3 +415,24 @@ MCV4U
 66.0
 SCH4U
 82.0
+
+darryl
+password123
+Darryl
+Wu
+234789345
+7
+ENG4U
+60.0
+ICS4U
+26.0
+SPH4U
+88.0
+SCH4U
+63.0
+MHF4U
+90.0
+MDM4U
+92.0
+MCV4U
+83.0

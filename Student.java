@@ -290,7 +290,7 @@ public class Student extends User {
 
 		ActiveCourse course = courseList.get(choice - 1);
 		courseTracker.dropCourse(course);
-		System.out.println("Course successfully droppped.");
+		System.out.println("Course successfully dropped.");
 	}
 
 	/**
@@ -388,7 +388,7 @@ public class Student extends User {
 
 		double topSixAverage = courseTracker.checkAverageTopSixRecursion(topSixCourses);
 
-		System.out.println("\n--- Current Average ---");
+		System.out.println("\n--- Top Six Average ---");
 		System.out.printf("Average: %.2f%%%n", topSixAverage);
 		System.out.println("Enter anything to return to the previous menu: ");
 		sc.nextLine();
@@ -402,6 +402,7 @@ public class Student extends User {
 		final String EXIT = "-1";
 		String password, newPassword, confirmNewPassword;
 
+		System.out.println("\n--- Change Password ---");
 		System.out.print("Please re-enter your current password to confirm your identity: ");
 		password = sc.nextLine();
 		while (!password.equals(this.password)) {
@@ -415,6 +416,11 @@ public class Student extends User {
 
 		System.out.print("Enter new password: ");
 		newPassword = sc.nextLine();
+		while (newPassword.length() < MIN_PASSWORD_LENGTH) {
+			System.out.println("Password must be at least " + MIN_PASSWORD_LENGTH + " characters long.");
+			System.out.print("Enter new password: ");
+			newPassword = sc.nextLine();
+		}
 		System.out.print("Confirm new password: ");
 		confirmNewPassword = sc.nextLine();
 		while (!newPassword.equals(confirmNewPassword)) {
@@ -441,6 +447,7 @@ public class Student extends User {
 		final String EXIT = "-1";
 		String password, newUsername, confirmNewUsername;
 
+		System.out.println("\n--- Change Username ---");
 		System.out.print("Please re-enter your current password to confirm your identity: ");
 		password = sc.nextLine();
 		while (!password.equals(this.password)) {
@@ -454,6 +461,11 @@ public class Student extends User {
 
 		System.out.print("Enter new username: ");
 		newUsername = sc.nextLine();
+		while (username.length() < MIN_USERNAME_LENGTH) {
+			System.out.println("Username must be at least " + MIN_USERNAME_LENGTH + " characters long.");
+			System.out.print("Enter new username: ");
+			username = sc.nextLine();
+		}
 		System.out.print("Confirm new username: ");
 		confirmNewUsername = sc.nextLine();
 		while (!newUsername.equals(confirmNewUsername)) {

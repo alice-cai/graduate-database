@@ -265,7 +265,7 @@ public class Admin extends User {
 				case 6:
 					if (confirmStudentDeletion()) {
 						studentList.remove(student);
-						System.out.println("Student removed. Enter any key to go back to the main menu.");
+						System.out.println("Student removed. Enter any key to go back to the previous menu.");
 						sc.nextLine();
 						return;
 					}
@@ -313,6 +313,7 @@ public class Admin extends User {
 			System.out.println(graduateList.get(choice-1));
 			System.out.println("Enter any key to return to the previous menu: ");
 			sc.nextLine();
+			choice = 0;
 		}
 	}
 
@@ -410,7 +411,7 @@ public class Admin extends User {
 				sc.nextLine();
 			}
 
-			if (!(choice > 0 && choice <= GraduateDatabase.NUM_COURSES)) {
+			if (!(choice > 0 && choice <= GraduateDatabase.PROGRAMS.length)) {
 				System.out.println("Invalid input!");
 				choice = 0;
 			}

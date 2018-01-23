@@ -228,7 +228,7 @@ public class InformationSystem {
 		while (!confirmPassword.equals(password)) {
 			System.out.println("Passwords don't match.");
 			System.out.print("Confirm Password: ");
-			password = sc.nextLine();
+			confirmPassword = sc.nextLine();
 		}
 
 		// prompts user for their name
@@ -267,6 +267,7 @@ public class InformationSystem {
 		} while (numCourses == 0);
 
 		ArrayList<ActiveCourse> courseList = new ArrayList<>();
+		ArrayList<String> courseCodes = new ArrayList<>();
 
 		// prompts user to enter all their course information (outputs an error message
 		// if the user enters a course that is not offered at AY Jackson)
@@ -276,8 +277,9 @@ public class InformationSystem {
 
 			System.out.print("Course: ");
 			courseCode = sc.nextLine();
-			while (!CourseTracker.isValidCourse(courseCode)) {
-				System.out.println("That course is not offered at AY Jackson.");
+			while (!CourseTracker.isValidCourse(courseCode) || courseCodes.contains(courseCode)) {
+				System.out.println("Invalid course! Either that course has already been entered, or it");
+				System.out.println("is not offered at AY Jackson.");
 				System.out.print("Enter a new course: ");
 				courseCode = sc.nextLine();
 			}
@@ -297,6 +299,7 @@ public class InformationSystem {
 			} while (mark == -1);
 
 			courseList.add(new ActiveCourse(courseCode, mark));
+			courseCodes.add(courseCode);
 		}
 
 
@@ -315,7 +318,7 @@ public class InformationSystem {
 	public boolean checkValidOEN (String oen) {
 		int oenLength = oen.length();
 
-		if (oenLength < Student.OEN_LENGTH) {
+		if (oenLength != Student.OEN_LENGTH) {
 			return false;
 		}
 

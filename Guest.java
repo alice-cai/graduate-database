@@ -44,7 +44,7 @@ public class Guest extends User {
 
 		while (true) {
 			// displays main menu of options
-			System.out.println("\nGuest Menu");
+			System.out.println("\n--- Guest Menu ---");
 			for (int i = 0; i < numMenuOptions; i++) {
 				System.out.println(menuOptions[i]);
 			}
