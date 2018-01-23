@@ -114,7 +114,10 @@ public class Program implements Comparable<Program>
 		input = Method.sc.nextLine(); 
 	}// Displays the courses required
 	
-	
+	public int getId()
+	{
+		return id;
+	}
 	public boolean searchProgram(String s)
 	{
 			return (overview.getName().toLowerCase().contains(s.toLowerCase()));
