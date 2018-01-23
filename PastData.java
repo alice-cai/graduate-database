@@ -1,49 +1,45 @@
 import java.util.*;
-import java.io.*;
 
-public class PastData_Manager
+public class PastData
 {
 
-	private ArrayList<PastData> pastData;
-	private GraduateDatabase gradData;
-		
-	public PastData_Manager()
-	{
-		pastData = new ArrayList<PastData>();
-		gradData = new GraduateDatabase(); // graduate database loads from a text file.
-	}//Initializes the PastData_Manager class from file
-	
-   
-   public GraduateDatabase getGrad()
-   {
-      return gradData;
-   }// This is required for the program database to make use of the graudate database
-   
-	public ArrayList<PastData> findPastData (int programID)
-	{
-		ArrayList<PastData> p = new ArrayList<>();
-		for (int i = 0; i < pastData.size(); i++)
-		{
-			if (pastData.get(i).checkProgram(programID))
-				p.add(pastData.get(i));
-		}
-		return p;
-	}//Searches the pastdata given the programID
-	
-	public double admissionAverage(int programID)
-	{
-		return gradData.calculateMean(programID);
-	}//Returns the admission average based on the past data of a particular program
-	
+	private int year;
+	private double lowestAverage;
+	private double mean;
+	private double median;
+	private int admissionCount;
+	private int program;
 
-	public void addPastData(PastData p)
-	{	
-      pastData.add(p);
-      
-	}//This adds a past data object into the array
-	
-	public int getSize()
+	public PastData(int y, int p, double lowest, double mean, double median, int admission)
 	{
-		return pastData.size();
-	}//Returns the number of past data objects
+		year = y;
+		program = p;
+		lowestAverage = lowest;
+		this.mean = mean;
+		this.median = median;
+		admissionCount = admission;
+	}
+	
+	public void display()
+	{
+		String input;
+		System.out.print(this);
+		System.out.print("Press any key to return to previous menu.");
+		input = Method.sc.nextLine(); // this outputs all the information of the data of a certain year of a program.
+	}
+	
+	public boolean checkProgram(int n)
+	{
+		return (n==program);
+	}
+	
+	public int getYear()
+	{
+		return year;
+	}
+	
+	public String toString()
+	{
+		return("Year: " + year + "\nLowest average admitted: " + lowestAverage + "\nMean of admission average: " + mean + "\nMedian of admission average: " + median + "\nTotal admission: " + admissionCount+ "\n");
+	}
 }
