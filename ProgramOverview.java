@@ -34,7 +34,7 @@ public class ProgramOverview
 		System.out.print ("Enter major name: ");
 		major=sc.nextLine();
 		System.out.print ("Enter enrollment number: ");
-		enrollment=sc.nextInt();
+		enrollment=Method.getInt(Integer.MAX_VALUE);
 		System.out.print ("Enter coop option (enter \"true\" for true, and anything else for false): ");
 		sc.next();
 		coop=Boolean.parseBoolean(sc.nextLine().toLowerCase());

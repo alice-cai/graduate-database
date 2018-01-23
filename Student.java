@@ -351,8 +351,11 @@ public class Student extends User {
 	* Student's top six average using the selected courses.
 	*/
 	public void getTopSixAverage () {
+		System.out.println("\n--- Top Six Average ---");
 		if (courseTracker.getNumCourses() < GraduateDatabase.NUM_COURSES) {
-			System.out.println("Not enough courses for top six!");
+			System.out.println("Not enough courses for top six! Enter anything to return to previous menu.");
+			sc.nextLine();
+			return;
 		}
 
 		displayCourseList();
@@ -392,7 +395,6 @@ public class Student extends User {
 
 		double topSixAverage = courseTracker.checkAverageTopSixRecursion(topSixCourses);
 
-		System.out.println("\n--- Top Six Average ---");
 		System.out.printf("Average: %.2f%%%n", topSixAverage);
 		System.out.println("Enter anything to return to the previous menu: ");
 		sc.nextLine();
@@ -472,7 +474,7 @@ public class Student extends User {
 		}
 		System.out.print("Confirm new username: ");
 		confirmNewUsername = sc.nextLine();
-		while (!newUsername.equals(confirmNewUsername)) {
+		while (!newUsername.equalsIgnoreCase(confirmNewUsername)) {
 			System.out.println("Usernames don't match! Enter anything to try again (enter " + EXIT + " to cancel).");
 			String choice = sc.nextLine();
 			if (choice.equals(EXIT)) {
@@ -484,7 +486,7 @@ public class Student extends User {
 			confirmNewUsername = sc.nextLine();
 		}
 
-		this.username = newUsername;
+		this.username = newUsername.toLowerCase();
 		System.out.println("Username changed successfully.");
 	}
 }

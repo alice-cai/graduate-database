@@ -217,8 +217,11 @@ public class QNAAdmin extends QNAPage
    } // browseUnanswered method
   
    public static void savingPrompt()            // this method prompts admin to save progress
-   {     
-      sc.nextLine();                            
+   {        
+      if (numUQs != 0)
+         System.out.println ("*Press the Enter key only if you don't see a saving prompt:");
+      sc.nextLine();
+
       final String SAVE = "1";                  // constant to check whether user wants to save
       
       System.out.println ("\nWould you like to save changes? (Enter \""+ SAVE +"\" to save, enter any other key to dismiss)");

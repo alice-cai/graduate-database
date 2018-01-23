@@ -85,7 +85,21 @@ public class Method {
 		}
 		return Integer.parseInt(choice);
 	}
-	 
+
+	public static int getInt (int option)
+	{
+ 		String choice;
+ 		//System.out.print("Enter a number: ");
+		choice = sc.nextLine();
+		while (!inputCheck(choice, option))
+		{
+			System.out.println("The previous entry is invalid.");
+			System.out.print("Enter a number: ");
+			choice = sc.nextLine();
+		}
+		return Integer.parseInt(choice);
+	}
+
    	public static double getMark(double number)
 	{
  		String choice;
