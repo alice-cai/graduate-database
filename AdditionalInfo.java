@@ -13,7 +13,7 @@ public class AdditionalInfo
 		scholarship = sc;
 		supplementary = su;
 		earlyAdm = e;
-	}
+	}//Initializes from the Program Database class, with readings from the file
    
    public AdditionalInfo()
 	{
@@ -24,7 +24,7 @@ public class AdditionalInfo
       System.out.print ("Enter early admission information: ");
       earlyAdm=Method.sc.nextLine();
 
-	}
+	}//Initialization from admin's input
    
    public String getScholarship()
    {
@@ -39,7 +39,7 @@ public class AdditionalInfo
    public String getEarlyAdm()
    {
       return earlyAdm;
-   }
+   }//for accessing the information (in case if we need to)
    
 	public void display()
 	{
@@ -47,12 +47,12 @@ public class AdditionalInfo
 		System.out.println(this);
 		System.out.print("Press any key to return to previous menu.");
 		input = Method.sc.nextLine(); 
-	}
+	}//displays the information
 	
 	public String toString ()
 	{
 		return("Scholarship options: " + scholarship + "\nSupplementary requirement: " + supplementary + "\nEarly admission date: "+ earlyAdm +"\n");
-	}
+	}//For displaying purposes
 
    
    public void save (String file)
@@ -69,7 +69,7 @@ public class AdditionalInfo
       {
          System.out.println("Problem saving additional information.");
       }
-   }
+   }//Saving the changes to text file
 	
 	
 }

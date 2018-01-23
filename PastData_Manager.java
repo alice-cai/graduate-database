@@ -11,13 +11,13 @@ public class PastData_Manager
 	{
 		pastData = new ArrayList<PastData>();
 		gradData = new GraduateDatabase(); // graduate database loads from a text file.
-	}
+	}//Initializes the PastData_Manager class from file
 	
    
    public GraduateDatabase getGrad()
    {
       return gradData;
-   }
+   }// This is required for the program database to make use of the graudate database
    
 	public ArrayList<PastData> findPastData (int programID)
 	{
@@ -28,22 +28,21 @@ public class PastData_Manager
 				p.add(pastData.get(i));
 		}
 		return p;
-	}
+	}//Searches the pastdata given the programID
 	
 	public double admissionAverage(int programID)
 	{
 		return gradData.calculateMean(programID);
-	}
+	}//Returns the admission average based on the past data of a particular program
 	
 
 	public void addPastData(PastData p)
 	{	
       pastData.add(p);
       
-		// input info about the program here
-	}
+	}//This adds a past data object into the array
 	public int getSize()
 	{
 		return pastData.size();
-	}
+	}//Returns the number of past data objects
 }

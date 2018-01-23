@@ -3,6 +3,7 @@ import java.io.*;
 
 public class ProgramDatabase
 {	
+	//The static variables/methods are for different users' accesses
 	private static final String PROGRAM = "programs/program_overview.txt";
 	private static final String MENU = "programs/program_database_menu.txt";
 	private static final String ORDER = "programs/sort.txt";
@@ -82,7 +83,7 @@ public class ProgramDatabase
 		catch (IOException iox)
 		{
 			System.out.println("Cannot load file...");
-		}
+		} // This loads everything from the file that has all the programs.
       
 	}
 	
@@ -94,7 +95,7 @@ public class ProgramDatabase
 	public int getProgramNumber()
 	{
 		return programs.size();
-	}
+	} //returns the number of programs stored
 
 	public void displayMenu()
 	{
@@ -157,7 +158,7 @@ public class ProgramDatabase
                	break;
 			}
 		} while(!exit);
-	}
+	}//Menu is displayed and the corresponding options are chosen based on the user's choice
 	
 	public ArrayList<Program> sort(ArrayList<Program> programList) {
 		boolean sorted = true;
@@ -174,7 +175,7 @@ public class ProgramDatabase
 			}
 		}
 		return convertArrayToArrayListAscending(temp);
-	}
+	}//This sorts the array of programs in ascending order based on their admission averages
 	
 	public ArrayList<Program> sortReverse(ArrayList<Program> programList) {
 		boolean sorted = true;
@@ -191,7 +192,7 @@ public class ProgramDatabase
 			}
 		}
 		return convertArrayToArrayListDescending(temp);
-	}
+	}//This sorts the array of programs in descending order based on their admission averages
 
 	private Program[] convertArrayListToArray (ArrayList<Program> programList) {
 		Program[] newList = new Program[programList.size()];
@@ -201,7 +202,7 @@ public class ProgramDatabase
 		}
 
 		return newList;
-	}
+	}//Says in the method header
 
 	private ArrayList<Program> convertArrayToArrayListAscending(Program[] programList) {
 		ArrayList<Program> temp = new ArrayList<>();
@@ -210,15 +211,16 @@ public class ProgramDatabase
 		}
 
 		return temp;
-	}
-	private ArrayList<Program> convertArrayToArrayListDescending(Program[] programList) {
+	}//Converts ArrayList to array by adding each variable.
+	
+	private static ArrayList<Program> convertArrayToArrayListDescending(Program[] programList) {
 		ArrayList<Program> temp = new ArrayList<>();
 		for(int i=programList.length-1; i>=0; i--){
 			temp.add(programList[i]);
 		}
 
 		return temp;
-	}
+	}//Same as the above method, but in a different order
 	
 	
 	public ArrayList<Program> searchByUni(String s)
@@ -231,7 +233,7 @@ public class ProgramDatabase
 				programList.add(programs.get(i)); //add the element from the list programs
 		}
 		return programList;
-	}
+	}//Returns a list of programs, searching by their universities.
    
 	public ArrayList<Program> searchByCode(String s)
 	{
@@ -243,7 +245,7 @@ public class ProgramDatabase
 				programList.add(programs.get(i)); //add the element from the list programs
 		}
 		return programList;
-	}
+	}//Returns a list of programs, searching by their OUAC code.
 	
 	public ArrayList<Program> searchByMajor(String s)
 	{
@@ -255,7 +257,7 @@ public class ProgramDatabase
 				programList.add(programs.get(i)); //add the element from the list programs
 		}
 		return programList;
-	}
+	}//Returns a list of programs, searching by their majors.
 
 	public ArrayList<Program> searchByProgram(String s)
 	{
@@ -267,7 +269,7 @@ public class ProgramDatabase
 				programList.add(programs.get(i)); //add the element from the list programs
 		}
 		return programList;
-	}
+	}//Returns a list of programs, searching by their program names.
 	
 	public ArrayList<Program> searchByAdmissionAverage(double k)
 	{
@@ -279,7 +281,7 @@ public class ProgramDatabase
 				programList.add(programs.get(i)); //add the element from the list programs
 		}
 		return programList;
-	}
+	}//Returns a list of programs that have a lower average than the given value.
 
 	public void addProgram()// by prompt
 	{
@@ -288,7 +290,7 @@ public class ProgramDatabase
 		programs.add(programList);
 		saveData();
 		//intitate all variables with user input.
-	}
+	}// Adding program with admin's input
    
 	public void deleteProgram()
 	{
@@ -297,7 +299,7 @@ public class ProgramDatabase
 		System.out.print("Enter the program number to be deleted. ");
 		deleteProgram(Method.getOption(programs.size()+1)-2);
 		saveData();
-	}
+	}// delete a progarm with admin's input
 	
 	public void deleteProgram(int index)
 	{
@@ -321,7 +323,7 @@ public class ProgramDatabase
 			System.out.println("Press any key to return to previous menu.");
 			input = Method.sc.nextLine(); 
 		}
-	}
+	}//Deletes a program with a given index in the array, used together with the previous method
    
 	private void saveData()
 	{
@@ -337,5 +339,5 @@ public class ProgramDatabase
 		{
 			System.out.println("Error saving to programs file.");
 		}
-	}
+	} //Saves all the addition and deletion to the file contaning all the information
 }
