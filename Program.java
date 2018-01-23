@@ -118,6 +118,10 @@ public class Program implements Comparable<Program>
 	{
 		return id;
 	}
+	public void setID(int ID)
+	{
+      		id=ID;
+	}
 	public boolean searchProgram(String s)
 	{
 			return (overview.getName().toLowerCase().contains(s.toLowerCase()));
