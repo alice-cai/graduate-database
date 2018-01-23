@@ -302,7 +302,7 @@ public class Student extends User {
 	public void updateCourseMark () {
 		final int EXIT = -1;
 		int choice = 0;
-		double mark = Double.NaN;
+		double mark = Integer.MAX_VALUE;
 		ArrayList<ActiveCourse> courseList = courseTracker.getCourseList();
 		displayCourseList();
 
@@ -337,10 +337,10 @@ public class Student extends User {
 			if (mark == EXIT) {
 				return;
 			} else if (!course.updateMark(mark)) {
-				mark = Double.NaN;
+				mark = Integer.MAX_VALUE;
 				System.out.println("Mark must be between " + ActiveCourse.MIN_MARK + " and " + ActiveCourse.MAX_MARK + ". Please try again: ");
 			}
-		} while (mark == Double.NaN);
+		} while ((int)mark == Integer.MAX_VALUE);
 
 		System.out.println("Mark updated successfully!");
 	}
