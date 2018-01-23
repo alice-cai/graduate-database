@@ -10,7 +10,7 @@ public class PastData_Manager
 	public PastData_Manager()
 	{
 		pastData = new ArrayList<PastData>();
-		gradData = new GraduateDatabase(); // graduate database loads from a text file.
+		gradData = InformationSystem.getGraduateDatabase(); // graduate database loads from a text file.
 	}//Initializes the PastData_Manager class from file
 	
    
@@ -41,6 +41,7 @@ public class PastData_Manager
       pastData.add(p);
       
 	}//This adds a past data object into the array
+	
 	public int getSize()
 	{
 		return pastData.size();
