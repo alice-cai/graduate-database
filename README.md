@@ -17,3 +17,10 @@ Clone the repository and compile all .java files. Run InformationSystemRunner.
 ## User Manual
 
 See docs/user-manual.pdf for the full user documentation.
+
+## Contributors
+
+* [Alice Cai](https://github.com/alice-cai)
+* [Ordencia Wu](https://github.com/Ordencia)
+* [ManQiu Wu](https://github.com/hehe-eheh)
+* [Darryl Wu](https://github.com/Unchosen-name)
