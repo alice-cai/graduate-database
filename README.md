@@ -25,4 +25,4 @@ See docs/user-manual.pdf for the full user documentation.
 * [ManQiu Wu](https://github.com/hehe-eheh)
 * [Darryl Wu](https://github.com/Unchosen-name)
 
-Created Dec 2017 - Jan 2018 for ICS4U.
+Created for ICS4U in Dec 2017-Jan 2018.
