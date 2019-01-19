@@ -4,4 +4,4 @@
 4. Search by category
 5. Browse unanswered questions
 6. Browse unanswered questions by category
-7. Add a catgory
+7. Add a category

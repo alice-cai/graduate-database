@@ -333,7 +333,7 @@ public class Admin extends User {
 	private boolean moveToGraduateDatabase (Student student) {
 		final String CONFIRMATION = "CONFIRM";
 
-		System.out.println("\n--- Move Student to Graudate Database ---");
+		System.out.println("\n--- Move Student to Graduate Database ---");
 
 		// if the student does not have enough credits to graduate, output an error message
 		// and take the user back to the previous menu
@@ -363,7 +363,7 @@ public class Admin extends User {
 		// display a numbered list of the student's courses and ask the user to select the six courses
 		// that the student used to apply to their program
 		student.displayCourseList();
-		System.out.println("\nEnter the indicies of the courses that the student used for their top six:");
+		System.out.println("\nEnter the indices of the courses that the student used for their top six:");
 		for (int i = 0; i < GraduateDatabase.NUM_COURSES; i++) {
 			while (choice == 0) {
 				try {
