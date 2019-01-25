@@ -37,9 +37,9 @@ public class QNAGuest extends QNAPage
 
 	}  // initQNA method
 
-	public static void displayMenu ()               // this method displays an interactive menu for guests
+	public static void displayMenu ()   // this method displays an interactive menu for guests
 	{	
-		int option = INITIAL;                                                // initialize option (useful value inputted in try strcture)
+		int option = INITIAL;                                                  // initialize option (useful value inputted in try strcture)
 		do
 		{
 			System.out.println("\n--- Guest Q&A Menu ---");
@@ -49,45 +49,45 @@ public class QNAGuest extends QNAPage
 			}
 			System.out.println ("Enter option number (\"" + EXIT + "\" to return to previous menu): ");
 
-			boolean valid = false;                                            // before user enters option number, set boolean variable valid to false   
-			while (!valid)                                                    // this represents whether user's input is valid
+			boolean valid = false;                                             // before user enters option number, set boolean variable valid to false   
+			while (!valid)                                                     // this represents whether user's input is valid
 			{
 				try
 				{
 					option = sc.nextInt();                                         // if user enters an int that is either the exit number or a number within the 
 					if (option == EXIT || option>= 1 && option <= numMenuOptions)  // reasonable range (1 to number of menu options)
 					{
-						valid = true;                                               // then set valid to true
+						valid = true;                                              // then set valid to true
 					}
 					else                                                           // otherwise user have to enter an option again
 					{
 						System.out.print ("Invalid input, enter again: ");
 					}
 				}	
-				catch (InputMismatchException ime)                                // catch any input mismatch if user enters a String
+				catch (InputMismatchException ime)                                 // catch any input mismatch if user enters a String
 				{	
 					System.out.print ("Invalid input, enter again: ");             // and ask user to enter again
 					sc.nextLine();
 				}
 			} 
 
-			switch (option)                     // once option number is valid, enter the switch structure
+			switch (option)                      // once option number is valid, enter the switch structure
 			{
 				case 1:                          // if option = 1
-					displayList();                 // display list of Q&As
+					displayList();               // display list of Q&As
 					break;
 				case 2:                          // if option = 2
-					searchKeyWord();              // search questions by keyword
+					searchKeyWord();             // search questions by keyword
 					break;
 				case 3:                          // if option = 3
-					categoryList();               // display list of categories
+					categoryList();              // display list of categories
 					break;
 				case 4:                          // if option = 4
-					searchCategory();             // search questions by category
+					searchCategory();            // search questions by category
 					break;
 			}
-		} while (option != EXIT);              // repeat until user enters exit number
-      answeredQNAs.clear();                  // clear all array lists before next user loads information again
+		} while (option != EXIT);                // repeat until user enters exit number
+      answeredQNAs.clear();                      // clear all array lists before next user loads information again
       categories.clear();
       menu.clear();
 	}  // displayMenu method

@@ -8,7 +8,7 @@ public class ContactInfo
 	private String address;
 	private String person;
 	Scanner sc = new Scanner (System.in);
-   
+
 	public ContactInfo(String ph, String e, String p, String a)
 	{
 		phone = ph;
@@ -16,18 +16,19 @@ public class ContactInfo
 		address = a;
 		person = p;
 	}//This is initilized from the Program Database class
+
 	public ContactInfo()
-	   {
-	      System.out.print ("Enter program phone number: ");
-	      phone=sc.nextLine();
-	      System.out.print ("Enter program Email: ");
-	      email=sc.nextLine();
-	      System.out.print ("Enter program address: ");
-	      address=sc.nextLine();
-	      System.out.print ("Enter contact person: ");
-	      person=sc.nextLine();
-	   }//This is initilized from admin's input
-   
+	{
+		System.out.print ("Enter program phone number: ");
+		phone=sc.nextLine();
+		System.out.print ("Enter program Email: ");
+		email=sc.nextLine();
+		System.out.print ("Enter program address: ");
+		address=sc.nextLine();
+		System.out.print ("Enter contact person: ");
+		person=sc.nextLine();
+	}//This is initilized from admin's input
+
 	public void display()
 	{
 		Scanner sc  = new Scanner (System.in);
@@ -41,22 +42,21 @@ public class ContactInfo
 	{
 		return("Phone: " + phone + "\nEmail: " + email + "\naddress: "+ address + "\nPerson: " + person + "\n");
 	}
-   
+
 	public void save (String file)
-   {
-      try
-      {
-         BufferedWriter out = new BufferedWriter(new FileWriter(file,true));
-         out.write(phone);out.newLine();
-         out.write(email);out.newLine();
-         out.write(person);out.newLine();
-         out.write(address);out.newLine();
-         out.close();
-      }
-      catch(IOException iox)
-      {
-         System.out.println("Problem saving contact information.");
-      }
-   }//Saves contact information of a program
-	
+	{
+		try
+		{
+			BufferedWriter out = new BufferedWriter(new FileWriter(file,true));
+			out.write(phone);out.newLine();
+			out.write(email);out.newLine();
+			out.write(person);out.newLine();
+			out.write(address);out.newLine();
+			out.close();
+		}
+		catch(IOException iox)
+		{
+			System.out.println("Problem saving contact information.");
+		}
+	}//Saves contact information of a program
 }

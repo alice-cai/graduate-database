@@ -12,14 +12,14 @@ import java.io.*;
 
 public class QNAStudent extends QNAPage
 {
-   private static final String UNANSWERED = "QNA/Active QNAs.txt";          	// file name for unanswered questions list, used by student class to upload a question
-   private static int numUQs;                                           		// number of unanswered questions
-   private static ArrayList<QNA> unansweredQNAs = new ArrayList<QNA>(); 		// array list storing unanswered questions
-   private static final String MENU = "QNA/QNA Student Menu.txt";               // file name for student menu options
-   private static final String EMPTY = "";                              		// empty String used to initialize answer for unanswered questions
-   
-   public static void initQNA ()                                        		// this method initializes all useful fields and array lists for student
-   {
+	private static final String UNANSWERED = "QNA/Active QNAs.txt";          	// file name for unanswered questions list, used by student class to upload a question
+	private static int numUQs;                                           		// number of unanswered questions
+	private static ArrayList<QNA> unansweredQNAs = new ArrayList<QNA>(); 		// array list storing unanswered questions
+	private static final String MENU = "QNA/QNA Student Menu.txt";               // file name for student menu options
+	private static final String EMPTY = "";                              		// empty String used to initialize answer for unanswered questions
+
+	public static void initQNA ()                                        		// this method initializes all useful fields and array lists for student
+	{
 		QNAStudent.initPage();                                            		// first initialize fields and array lists for general users
 		try                                                               		// then move on to student-specific elements
 		{
@@ -55,7 +55,8 @@ public class QNAStudent extends QNAPage
 		}
 
    } // initQNA method
-   
+
+
 	public static void displayMenu ()                  								// this method displays an interactive menu for student
 	{
 		int option = INITIAL;                                                			// initialize option (useful value inputted in try strcture)
@@ -109,12 +110,13 @@ public class QNAStudent extends QNAPage
 					break; 
 			}
 		} while (option != EXIT);              // repeat until user enters exit number
-      answeredQNAs.clear();                  // clear all array lists before next user loads information again
-      categories.clear();
-      menu.clear();
-      unansweredQNAs.clear();
+		answeredQNAs.clear();                  // clear all array lists before next user loads information again
+		categories.clear();
+		menu.clear();
+		unansweredQNAs.clear();
 	} // displayMenu method
-   
+
+
 	private static void askQ ()               		// this method prompts student to ask a question
 	{
 		String newQuestion;                    		// declare a String representing new question
@@ -182,10 +184,11 @@ public class QNAStudent extends QNAPage
 			System.out.println ("Problem uploading questions.");
 		}
 	} // askQ method
-   
+
+
 	private static void addQ (String newQuestion, String newCategory) 			// this method adds a new question to the array list of unanswered questions
-	{  																 			// parameters: newQuestion is the question to be added to array list
-												 								// newCategory is the category of the question to be added to array list
+	{																 			// parameters: newQuestion is the question to be added to array list
+																				// newCategory is the category of the question to be added to array list
 		QNA newQ;                                                      			// declare new object newQ
 		int newId = numUQs+1;                                          			// its id equals current number of unanswered questions plus 1
 		numUQs ++;                                                     			// number of unanswered questions increases by 1
@@ -194,5 +197,5 @@ public class QNAStudent extends QNAPage
 		unansweredQNAs.add(newQ);                                      			// add the object to the unanswered questionts array list and output a success message
 		System.out.println ("Your question has been uploaded to be reviewed by the administration.");
 		System.out.println ();  
-	}  // addQ method
-}  // QNAStudent class
+	} // addQ method
+} // QNAStudent class

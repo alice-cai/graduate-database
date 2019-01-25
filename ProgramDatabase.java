@@ -13,7 +13,8 @@ public class ProgramDatabase
 	private PastData_Manager pastdata;
 	private ArrayList<String> menu;
 	private ArrayList<String> order;
-   
+
+
 	public ProgramDatabase ()
 	{
 		menu = Method.readMenu(MENU);
@@ -36,66 +37,68 @@ public class ProgramDatabase
 		AdditionalInfo additionalInfo;
 		ContactInfo contact;
 		int ID;
-      
+
 		try
 		{
 			BufferedReader in = new BufferedReader(new FileReader(PROGRAM));
 			while ((input = in.readLine())!=null)
 			{
-	            ID = Integer.parseInt(input);
-	            
-	            for (int j = Method.CURYEAR-Method.PASTDATA+1; j<=Method.CURYEAR; j++)
-	            {
+				ID = Integer.parseInt(input);
+
+				for (int j = Method.CURYEAR-Method.PASTDATA+1; j<=Method.CURYEAR; j++)
+				{
 					if (!((graduateSize=(pastdata.getGrad().findGradList(ID,j).size()))<=0))
 					{
 						pastdata.addPastData(new PastData(j, ID, pastdata.getGrad().findLowestAverage(ID,j),pastdata.getGrad().calculateMean(ID,j), pastdata.getGrad().calculateMedian(ID,j), pastdata.getGrad().findGradList(ID,j).size()));
 					}
-	            }
-	            
-	            for (int i= 0; i < 4; i++)
-	               placeHolder[i] = in.readLine();
-	               
-	            coop = Method.trueOrFalse(in.readLine());
-	            enrollment = Integer.parseInt(in.readLine());
-	            mark = pastdata.admissionAverage(ID);
-	            overview = new ProgramOverview(placeHolder[0],placeHolder[1],placeHolder[2],placeHolder[3],coop, enrollment, mark);
-	            
-	            while (!(input = in.readLine()).toLowerCase().equals(END))
-	            {
+				}
+				
+				for (int i= 0; i < 4; i++)
+					placeHolder[i] = in.readLine();
+
+				coop = Method.trueOrFalse(in.readLine());
+				enrollment = Integer.parseInt(in.readLine());
+				mark = pastdata.admissionAverage(ID);
+				overview = new ProgramOverview(placeHolder[0],placeHolder[1],placeHolder[2],placeHolder[3],coop, enrollment, mark);
+
+				while (!(input = in.readLine()).toLowerCase().equals(END))
+				{
 					courseMark = Integer.parseInt(in.readLine());
 					courses.add(new CourseRequirement(input,courseMark));
-	            }
-	            
+				}
+
 				for (int i= 0; i < 3; i++)
 					placeHolder[i] = in.readLine();
-	            additionalInfo = new AdditionalInfo(placeHolder[0],placeHolder[1],placeHolder[2]);
-	            
-	            for (int i= 0; i < 4; i++)
-	               placeHolder[i] = in.readLine();
-	            contact = new ContactInfo(placeHolder[0],placeHolder[1],placeHolder[2], placeHolder[3]);
-	            
-	            programs.add(new Program(overview, courses, additionalInfo, contact, ID, pastdata.findPastData(ID)));
-	            courses=new ArrayList<CourseRequirement>();
-	            pastdata = new PastData_Manager();
-         	}
+				additionalInfo = new AdditionalInfo(placeHolder[0],placeHolder[1],placeHolder[2]);
+
+				for (int i= 0; i < 4; i++)
+					placeHolder[i] = in.readLine();
+				contact = new ContactInfo(placeHolder[0],placeHolder[1],placeHolder[2], placeHolder[3]);
+
+				programs.add(new Program(overview, courses, additionalInfo, contact, ID, pastdata.findPastData(ID)));
+				courses=new ArrayList<CourseRequirement>();
+				pastdata = new PastData_Manager();
+			}
 			in.close();
 		}
 		catch (IOException iox)
 		{
 			System.out.println("Cannot load file...");
 		} // This loads everything from the file that has all the programs.
-      
 	}
-	
+
+
 	public ArrayList<Program> getProgram()
 	{
 		return programs;
 	}
-   
+
+
 	public int getProgramNumber()
 	{
 		return programs.size();
 	} //returns the number of programs stored
+
 
 	public void displayMenu()
 	{
@@ -108,8 +111,8 @@ public class ProgramDatabase
 
 		do
 		{
-		 System.out.println("\n---- Program Database ---");
-         Method.displayMenu(menu);
+			System.out.println("\n---- Program Database ---");
+			Method.displayMenu(menu);
 			switch(Method.getOption(option))
 			{
 				case 1:
@@ -151,15 +154,15 @@ public class ProgramDatabase
 							//Collections.sort(programList);
 							Method.outputPrograms(sort(programList));
 							break;
-               		}
-               		break;
-            	case 6:
+					}
+					break;
+				case 6:
 					exit = true;
-               	break;
+				break;
 			}
 		} while(!exit);
 	}//Menu is displayed and the corresponding options are chosen based on the user's choice
-	
+
 	public ArrayList<Program> sort(ArrayList<Program> programList) {
 		boolean sorted = true;
 		Program[] temp = convertArrayListToArray(programList);
@@ -176,7 +179,8 @@ public class ProgramDatabase
 		}
 		return convertArrayToArrayListAscending(temp);
 	}//This sorts the array of programs in ascending order based on their admission averages
-	
+
+
 	public ArrayList<Program> sortReverse(ArrayList<Program> programList) {
 		boolean sorted = true;
 		Program[] temp = convertArrayListToArray(programList);
@@ -194,6 +198,7 @@ public class ProgramDatabase
 		return convertArrayToArrayListDescending(temp);
 	}//This sorts the array of programs in descending order based on their admission averages
 
+
 	private Program[] convertArrayListToArray (ArrayList<Program> programList) {
 		Program[] newList = new Program[programList.size()];
 
@@ -204,6 +209,7 @@ public class ProgramDatabase
 		return newList;
 	}//Says in the method header
 
+
 	private ArrayList<Program> convertArrayToArrayListAscending(Program[] programList) {
 		ArrayList<Program> temp = new ArrayList<>();
 		for(int i=0; i<programList.length; i++){
@@ -212,7 +218,8 @@ public class ProgramDatabase
 
 		return temp;
 	}//Converts ArrayList to array by adding each variable.
-	
+
+
 	private static ArrayList<Program> convertArrayToArrayListDescending(Program[] programList) {
 		ArrayList<Program> temp = new ArrayList<>();
 		for(int i=programList.length-1; i>=0; i--){
@@ -221,8 +228,8 @@ public class ProgramDatabase
 
 		return temp;
 	}//Same as the above method, but in a different order
-	
-	
+
+
 	public ArrayList<Program> searchByUni(String s)
 	{
 		ArrayList<Program> programList = new ArrayList<Program>();
@@ -234,7 +241,8 @@ public class ProgramDatabase
 		}
 		return programList;
 	}//Returns a list of programs, searching by their universities.
-   
+
+
 	public ArrayList<Program> searchByCode(String s)
 	{
 		ArrayList<Program> programList = new ArrayList<Program>();
@@ -246,7 +254,8 @@ public class ProgramDatabase
 		}
 		return programList;
 	}//Returns a list of programs, searching by their OUAC code.
-	
+
+
 	public ArrayList<Program> searchByMajor(String s)
 	{
 		ArrayList<Program> programList = new ArrayList<Program>();
@@ -259,6 +268,7 @@ public class ProgramDatabase
 		return programList;
 	}//Returns a list of programs, searching by their majors.
 
+
 	public ArrayList<Program> searchByProgram(String s)
 	{
 		ArrayList<Program> programList = new ArrayList<Program>();
@@ -270,7 +280,8 @@ public class ProgramDatabase
 		}
 		return programList;
 	}//Returns a list of programs, searching by their program names.
-	
+
+
 	public ArrayList<Program> searchByAdmissionAverage(double k)
 	{
 		ArrayList<Program> programList = new ArrayList<Program>();
@@ -283,6 +294,7 @@ public class ProgramDatabase
 		return programList;
 	}//Returns a list of programs that have a lower average than the given value.
 
+
 	public void addProgram()// by prompt
 	{
 		System.out.println("\n--- Add Program ---");
@@ -291,7 +303,8 @@ public class ProgramDatabase
 		saveData();
 		//intitate all variables with user input.
 	}// Adding program with admin's input
-   
+
+
 	public void deleteProgram()
 	{
 		System.out.println("\n--- Delete Program ---");
@@ -300,7 +313,8 @@ public class ProgramDatabase
 		deleteProgram(Method.getOption(programs.size()+1)-2);
 		saveData();
 	}// delete a progarm with admin's input
-	
+
+
 	public void deleteProgram(int index)
 	{
 		int size = programs.size();
@@ -324,7 +338,8 @@ public class ProgramDatabase
 			input = Method.sc.nextLine(); 
 		}
 	}//Deletes a program with a given index in the array, used together with the previous method
-   
+
+
 	private void saveData()
 	{
 		try{

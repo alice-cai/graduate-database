@@ -10,7 +10,7 @@ public class ProgramOverview
 	private boolean coop;
 	private int enrollment;
 	private double admissionAverage;
-   	Scanner sc = new Scanner (System.in);
+	Scanner sc = new Scanner (System.in);
 	
 	public ProgramOverview(String n, String u, String o, String m, boolean c, int e, double a)
 	{
@@ -72,9 +72,9 @@ public class ProgramOverview
 	
 	public double getAverage()
 	{
-	  return admissionAverage;
+		return admissionAverage;
 	}//Accessors for searching purposes in the Program class
-   
+
 	public String overview()
 	{
 		return ("Program name: " + name + "\nUniversity: " + university + "\nOUAC code : "+ ouacCode + "\nMajor: " + major + "\nAdmisision average: " + admissionAverage+"\n");
@@ -88,7 +88,7 @@ public class ProgramOverview
 		s+= "Admission average: " + (admissionAverage>0? admissionAverage : "unknown") + "%\n";
 		return s;
 	}// Converts the program's information to String
-   
+
 	public void save (String file)
 	{
 		try
@@ -106,6 +106,5 @@ public class ProgramOverview
 		{
 			System.out.println("Problem saving program overview.");
 		}
-	}//Saves ProgramOverview information of a program.
-	
+	}//Saves ProgramOverview information of a program.	
 }
